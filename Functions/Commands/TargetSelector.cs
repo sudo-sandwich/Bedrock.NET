@@ -1,0 +1,138 @@
+﻿using Bedrock.Entities;
+using Bedrock.Functions.Commands;
+using Bedrock.Utility;
+using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Text;
+
+namespace Bedrock.Functions.Commands {
+    public class TargetSelector {
+        public static TargetSelector AllPlayers { get; } = new TargetSelector(Target.AllPlayers);
+        public static TargetSelector AllEntities { get; } = new TargetSelector(Target.AllEntities);
+        public static TargetSelector ClosestPlayer { get; } = new TargetSelector(Target.ClosestPlayer);
+        public static TargetSelector RandomPlayer { get; } = new TargetSelector(Target.RandomPlayer);
+        public static TargetSelector Self { get; } = new TargetSelector(Target.Self);
+
+        public Target Target { get; set; }
+
+        public int? Count { get; set; }
+        public int? DeltaX { get; set; }
+        public int? DeltaY { get; set; }
+        public int? DeltaZ { get; set; }
+        public int? MinLevel { get; set; }
+        public int? MaxLevel { get; set; }
+        public Mode? GameMode { get; set; }
+        public string Name { get; set; }
+        public double? MinRadius { get; set; }
+        public double? MaxRadius { get; set; }
+        private double? _minRotX;
+        public double? MinRotX {
+            get {
+                return _minRotX;
+            }
+            set {
+                if (value < -90 || value > 90) {
+                    throw new ArgumentOutOfRangeException("MinRotX", "Must be between -90 and 90.");
+                }
+                _minRotX = value;
+            }
+        }
+        private double? _maxRotX;
+        public double? MaxRotX {
+            get {
+                return _maxRotX;
+            }
+            set {
+                if (value < -90 || value > 90) {
+                    throw new ArgumentOutOfRangeException("MaxRotX", "Must be between -90 and 90.");
+                }
+                _maxRotX = value;
+            }
+        }
+        private double? _minRotY;
+        public double? MinRotY {
+            get {
+                return _minRotY;
+            }
+            set {
+                if (value < -180 || value > 180) {
+                    throw new ArgumentOutOfRangeException("MinRotY", "Must be between -180 and 180.");
+                }
+                _minRotY = value;
+            }
+        }
+        private double? _maxRotY;
+        public double? MaxRotY {
+            get {
+                return _maxRotY;
+            }
+            set {
+                if (value < -180 || value > 180) {
+                    throw new ArgumentOutOfRangeException("MaxRotY", "Must be between -180 and 180.");
+                }
+                _maxRotY = value;
+            }
+        }
+        public ScoreSelector[] Scores { get; set; }
+        public string[] Tags { get; set; }
+        public string Type { get; set; }
+        public double? X { get; set; }
+        public double? Y { get; set; }
+        public double? Z { get; set; }
+
+        public TargetSelector(Target target) {
+            Target = target;
+        }
+
+        public override string ToString() {
+            IList<string> arguments = new List<string>();
+            if (Count != null) arguments.Add("c = " + Count);
+            if (DeltaX != null) arguments.Add("dx = " + DeltaX);
+            if (DeltaY != null) arguments.Add("dy = " + DeltaY);
+            if (DeltaZ != null) arguments.Add("dz = " + DeltaZ);
+            if (MaxLevel != null) arguments.Add("l = " + MaxLevel);
+            if (MinLevel != null) arguments.Add("lm = " + MinLevel);
+            if (GameMode != null) arguments.Add("m = " + GameMode);
+            if (Name != null) arguments.Add("name = " + Name);
+            if (MaxRadius != null) arguments.Add("r = " + MaxRadius);
+            if (MinRadius != null) arguments.Add("rm = " + MinRadius);
+            if (MaxRotX != null) arguments.Add("rx = " + MaxRotX);
+            if (MinRotX != null) arguments.Add("rxm = " + MinRotX);
+            if (MaxRotY != null) arguments.Add("ry = " + MaxRotY);
+            if (MinRotY != null) arguments.Add("rym = " + MinRotY);
+            if (Type != null) arguments.Add("type = " + Type);
+            if (X != null) arguments.Add("x = " + X);
+            if (Y != null) arguments.Add("y = " + Y);
+            if (Z != null) arguments.Add("z = " + Z);
+            if (Tags != null) {
+                foreach (string tag in Tags) {
+                    arguments.Add("tag = " + tag);
+                }
+            }
+            if (Scores != null) {
+                StringBuilder stringBuilder = new StringBuilder("scores = {");
+                foreach (ScoreSelector score in Scores) {
+                    stringBuilder.Append(score.ToString());
+                }
+                stringBuilder.Append("}");
+                arguments.Add("scores = {" + string.Join(", ", (object[])Scores) + "}");
+            }
+
+            return Target.GetDescription() + (arguments.Count > 0 ? "[" + string.Join(", ", arguments) + "]" : "");
+        }
+    }
+
+    public enum Target {
+        [Description("@a")]
+        AllPlayers,
+        [Description("@e")]
+        AllEntities,
+        [Description("@p")]
+        ClosestPlayer,
+        [Description("@r")]
+        RandomPlayer,
+        [Description("@s")]
+        Self
+    }
+}
