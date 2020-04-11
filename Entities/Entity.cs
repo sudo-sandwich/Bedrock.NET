@@ -23,8 +23,8 @@ namespace Bedrock.Entities {
         public string SpawnEggOverlayColor { get; set; }
 
         public string Geometry { get; set; }
-        public string Texture { get; set; }
         public string Material { get; set; }
+        public string Texture { get; set; }
 
         public IList<IAnimateScript> BehaviorPackAnimations { get; } = new List<IAnimateScript>();
         public IList<IAnimateScript> ResourcePackAnimations { get; } = new List<IAnimateScript>();
@@ -42,6 +42,16 @@ namespace Bedrock.Entities {
         public EntityEvent EntityTransformed { get; } = new EntityEvent("minecraft:entity_transformed");
         public EntityEvent OnPrime { get; } = new EntityEvent("minecraft:on_prime");
 
+        public bool HasBehaviorPackAnimationTimelines {
+            get {
+                foreach (IAnimateScript animateScript in BehaviorPackAnimations) {
+                    if (animateScript is AnimationTimeline) {
+                        return true;
+                    }
+                }
+                return false;
+            }
+        }
         public bool HasBehaviorPackAnimationControllers {
             get {
                 foreach (IAnimateScript animateScript in BehaviorPackAnimations) {
@@ -62,14 +72,15 @@ namespace Bedrock.Entities {
                 return false;
             }
         }
-        public bool HasAnimationTimelines {
+        public bool HasClientEntity {
             get {
-                foreach (IAnimateScript animateScript in BehaviorPackAnimations) {
-                    if (animateScript is AnimationTimeline) {
-                        return true;
-                    }
-                }
-                return false;
+                return Geometry != null && Material != null && Texture != null;
+            }
+        }
+        //for right now, render controllers and client entities should always be created together, so if there is a client entity, there is also a render controller
+        public bool HasRenderControllers {
+            get {
+                return HasClientEntity;
             }
         }
 
@@ -188,7 +199,7 @@ namespace Bedrock.Entities {
         }
 
         //super incomplete
-        public JObject GenerateEntity() {
+        public JObject GenerateClientEntity() {
             JObject jObject = new JObject();
 
             jObject.Add("format_version", "1.10.0");
@@ -208,8 +219,8 @@ namespace Bedrock.Entities {
             }
             description.Add("render_controllers", new JArray("controller.render." + Identifier));
             description.Add(new JProperty("geometry", new JObject() { { "default", Geometry } }));
-            description.Add(new JProperty("textures", new JObject() { { "default", Texture } }));
             description.Add(new JProperty("materials", new JObject() { { "default", Material } }));
+            description.Add(new JProperty("textures", new JObject() { { "default", Texture } }));
 
             if (ResourcePackAnimations.Count > 0) {
                 JObject animations = new JObject();

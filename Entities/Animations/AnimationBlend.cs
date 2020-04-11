@@ -5,7 +5,7 @@ using System.Text;
 
 namespace Bedrock.Entities.Animations {
     public class AnimationBlend : IAnimateScript {
-        public Animation Animation { get; set; }
+        public IAnimation Animation { get; set; }
         public string Expression { get; set; }
 
         public ISet<IAnimation> Animations {
@@ -14,7 +14,7 @@ namespace Bedrock.Entities.Animations {
             }
         }
 
-        public AnimationBlend(Animation animation, string expression = null) {
+        public AnimationBlend(IAnimation animation, string expression = null) {
             Animation = animation;
             Expression = expression;
         }
