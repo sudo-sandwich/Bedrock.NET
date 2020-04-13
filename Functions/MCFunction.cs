@@ -11,6 +11,8 @@ namespace Bedrock.Functions {
         public string Name { get; set; }
         public IList<Command> Commands { get; } = new List<Command>();
 
+        internal string FunctionName { get; set; }
+
         public string Expression {
             get {
                 return "/function " + Name;
@@ -30,7 +32,7 @@ namespace Bedrock.Functions {
         public static implicit operator Command(MCFunction mcf) {
             return mcf?.ToCommand();
         }
-
+        
         public Command ToCommand() {
             return new Function(this);
         }
@@ -43,7 +45,7 @@ namespace Bedrock.Functions {
             }
 
             public override string ToString() {
-                return CommandHelper.Build("function", MCFunction.Name);
+                return CommandHelper.Build("function", MCFunction.FunctionName);
             }
         }
     }

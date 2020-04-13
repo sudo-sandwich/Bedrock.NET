@@ -114,6 +114,18 @@ namespace Bedrock.Entities {
             return ee;
         }
 
+        public AnimationTimeline CreateBehaviorAnimationTimeline(string shortName, string longName) {
+            AnimationTimeline at = new AnimationTimeline(shortName, longName);
+            BehaviorPackAnimations.Add(at);
+            return at;
+        }
+
+        public AnimationTimeline CreateBehaviorAnimationTimeline(string shortName, string longName, double length, bool loop) {
+            AnimationTimeline at = new AnimationTimeline(shortName, longName, length, loop);
+            BehaviorPackAnimations.Add(at);
+            return at;
+        }
+
         public AnimationController CreateBehaviorAnimationController(string shortName, string longName) {
             AnimationController ac = new AnimationController(shortName, longName);
             BehaviorPackAnimations.Add(ac);
@@ -268,6 +280,22 @@ namespace Bedrock.Entities {
             return jObject;
         }
 
+        public JObject GenerateBehaviorPackAnimationTimelines() {
+            JObject jObject = new JObject();
+            jObject.Add("format_version", "1.8.0");
+            JObject animations = new JObject();
+            jObject.Add(new JProperty("animations", animations));
+
+            foreach (IAnimateScript animateScript in BehaviorPackAnimations) {
+                AnimationTimeline animationTimeline = animateScript as AnimationTimeline;
+                if (animationTimeline != null) {
+                    animations.Add(animationTimeline.Generate());
+                }
+            }
+
+            return jObject;
+        }
+
         public JObject GenerateBehaviorPackAnimationControllers() {
             JObject jObject = new JObject();
             jObject.Add("format_version", "1.10.0");
@@ -294,22 +322,6 @@ namespace Bedrock.Entities {
                 AnimationController animationController = animateScript as AnimationController;
                 if (animationController != null) {
                     animationControllersJObject.Add(animationController.Generate());
-                }
-            }
-
-            return jObject;
-        }
-
-        public JObject GenerateAnimationTimelines() {
-            JObject jObject = new JObject();
-            jObject.Add("format_version", "1.8.0");
-            JObject animations = new JObject();
-            jObject.Add(new JProperty("animations", animations));
-
-            foreach (IAnimateScript animateScript in BehaviorPackAnimations) {
-                AnimationTimeline animationTimeline = animateScript as AnimationTimeline;
-                if (animationTimeline != null) {
-                    animations.Add(animationTimeline.Generate());
                 }
             }
 

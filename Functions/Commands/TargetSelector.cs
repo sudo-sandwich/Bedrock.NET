@@ -76,7 +76,26 @@ namespace Bedrock.Functions.Commands {
         }
         public ScoreSelector[] Scores { get; set; }
         public string[] Tags { get; set; }
-        public string Type { get; set; }
+        private Entity _type;
+        public Entity Type {
+            get {
+                return _type;
+            }
+            set {
+                _type = value;
+                _typeString = value?.FullIdentifier;
+            }
+        }
+        private string _typeString;
+        public string TypeString { 
+            get {
+                return _typeString;
+            }
+            set {
+                _type = null;
+                _typeString = value;
+            }
+        }
         public double? X { get; set; }
         public double? Y { get; set; }
         public double? Z { get; set; }
@@ -101,7 +120,7 @@ namespace Bedrock.Functions.Commands {
             if (MinRotX != null) arguments.Add("rxm = " + MinRotX);
             if (MaxRotY != null) arguments.Add("ry = " + MaxRotY);
             if (MinRotY != null) arguments.Add("rym = " + MinRotY);
-            if (Type != null) arguments.Add("type = " + Type);
+            if (TypeString != null) arguments.Add("type = " + TypeString);
             if (X != null) arguments.Add("x = " + X);
             if (Y != null) arguments.Add("y = " + Y);
             if (Z != null) arguments.Add("z = " + Z);
