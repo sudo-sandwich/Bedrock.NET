@@ -29,43 +29,60 @@ namespace Bedrock.Files {
             IndentChar = '\t'
         };
 
-        public IDictionary<string, IList<Entity>> Entities { get; private set; } = new Dictionary<string, IList<Entity>>(); //category, list of entities in that category
+        //prefer to use Add() to add entities and functions but you can directly use the fields if you want. Add() is easier though.
+        public IDictionary<string, IList<Entity>> Entities { get; private set; } = new Dictionary<string, IList<Entity>>();
         public IDictionary<string, IList<MCFunction>> Functions { get; private set; } = new Dictionary<string, IList<MCFunction>>();
+        public IDictionary<string, IList<IEntityTemplate>> EntityTemplates { get; private set; } = new Dictionary<string, IList<IEntityTemplate>>();
 
+        //helper methods for adding content to dicionaries
         //adds uncategorized entities
-        public void Add(params Entity[] entities) {
-            Add("", entities);
+        public void AddEntities(params Entity[] entities) {
+            AddEntities("", entities);
         }
-        public void Add(string category, params Entity[] entities) {
+        //adds categorized entities
+        public void AddEntities(string category, params Entity[] entities) {
             if (!Entities.ContainsKey(category)) {
                 Entities.Add(category, new List<Entity>());
             }
             Entities[category].AddRange(entities);
         }
-
         //adds uncategorized functions
-        public void Add(params MCFunction[] functions) {
-            Add("", functions);
+        public void AddFunctions(params MCFunction[] functions) {
+            AddFunctions("", functions);
         }
-        public void Add(string category, params MCFunction[] functions) {
+        //adds categorized functions
+        public void AddFunctions(string category, params MCFunction[] functions) {
             if (!Functions.ContainsKey(category)) {
                 Functions.Add(category, new List<MCFunction>());
             }
             Functions[category].AddRange(functions);
         }
+        //adds uncategorized entity templates
+        public void AddEntityTemplates(params IEntityTemplate[] entityTemplates) {
+            AddEntityTemplates("", entityTemplates);
+        }
+        //adds categorized entity templates
+        public void AddEntityTemplates(string category, params IEntityTemplate[] functions) {
+            if (!EntityTemplates.ContainsKey(category)) {
+                EntityTemplates.Add(category, new List<IEntityTemplate>());
+            }
+            EntityTemplates[category].AddRange(functions);
+        }
 
         public void AddContent(AddonContent content) {
             foreach (string key in content.Entities.Keys) {
-                if (!Entities.ContainsKey(key)) {
-                    Entities.Add(key, new List<Entity>());
-                }
-                Entities[key].AddRange(content.Entities[key]);
+                AddEntities(key, content.Entities[key].ToArray());
             }
-            Functions.AddRange(content.Functions);
+            foreach (string key in content.Functions.Keys) {
+                AddFunctions(key, content.Functions[key].ToArray());
+            }
+            foreach (string key in content.EntityTemplates.Keys) {
+                AddEntityTemplates(key, content.EntityTemplates[key].ToArray());
+            }
         }
 
-        //eraseOld will erase all files in the behavior pack animations directory, behavior pack animation controllers directory, behavior pack behaviors directory, behavior pack functions directory, resource pack entities directory, and resource pack render controllers directory
-        public void WriteAll(DirectoryInfo behaviorPack, DirectoryInfo resourcePack, bool eraseOld = false) {
+        //cleanOld will erase all files with the bedrock generation messages
+        public void WriteAll(DirectoryInfo behaviorPack, DirectoryInfo resourcePack, bool cleanOld = false) {
             DirectoryInfo functions = behaviorPack.CreateSubdirectory(Paths.Functions);
             DirectoryInfo behaviors = behaviorPack.CreateSubdirectory(Paths.Behaviors);
             DirectoryInfo behaviorPackAnimationTimelines = behaviorPack.CreateSubdirectory(Paths.BehaviorPackAnimationTimelines);
@@ -73,7 +90,7 @@ namespace Bedrock.Files {
             DirectoryInfo clientEntities = resourcePack.CreateSubdirectory(Paths.ClientEntity);
             DirectoryInfo renderControllers = resourcePack.CreateSubdirectory(Paths.RenderControllers);
             DirectoryInfo resourcePackAnimationControllers = resourcePack.CreateSubdirectory(Paths.ResourcePackAnimationControllers);
-            if (eraseOld) {
+            if (cleanOld) {
                 Console.ForegroundColor = ConsoleColor.Red;
                 Console.Write("Erasing old files... ");
                 IList<FileInfo> mcFunctionFiles = new List<FileInfo>();
@@ -108,6 +125,7 @@ namespace Bedrock.Files {
             Console.WriteLine("Linking full function names to function objects...");
             foreach (string key in Functions.Keys) {
                 foreach (MCFunction mcFunction in Functions[key]) {
+                    Console.WriteLine(mcFunction.Name);
                     mcFunction.FunctionName = key + "/" + mcFunction.Name;
                 }
             }
@@ -120,12 +138,24 @@ namespace Bedrock.Files {
                 }
             }
 
-            foreach (string key in Entities.Keys) {
+            IDictionary<string, IList<Entity>> entitiesToWrite = new Dictionary<string, IList<Entity>>(Entities);
+            Console.ForegroundColor = ConsoleColor.White;
+            Console.WriteLine("Generating EntityTemplates...");
+            foreach (string key in EntityTemplates.Keys) {
+                if (!Entities.ContainsKey(key)) {
+                    entitiesToWrite.Add(key, new List<Entity>());
+                }
+                foreach (IEntityTemplate template in EntityTemplates[key]) {
+                    entitiesToWrite[key].Add(template.ToEntity());
+                }
+            }
+
+            foreach (string key in entitiesToWrite.Keys) {
                 Console.BackgroundColor = ConsoleColor.White;
                 Console.ForegroundColor = ConsoleColor.Black;
                 Console.WriteLine("Generating " + (key.Length == 0 ? "uncategorized" : key) + " entities...");
                 Console.BackgroundColor = ConsoleColor.Black;
-                foreach (Entity entity in Entities[key]) {
+                foreach (Entity entity in entitiesToWrite[key]) {
                     Console.ForegroundColor = ConsoleColor.Yellow;
                     Console.WriteLine("Writing " + entity.Identifier + "...");
 
@@ -163,7 +193,7 @@ namespace Bedrock.Files {
                     }
 
                     Console.ForegroundColor = ConsoleColor.DarkCyan;
-                    if (entity.HasBehaviorPackAnimationControllers) {
+                    if (entity.HasResourcePackAnimationControllers) {
                         Console.WriteLine("\tWriting resource pack animation controllers...");
                         categoryDirectory = key.Length == 0 ? resourcePackAnimationControllers : resourcePackAnimationControllers.CreateSubdirectory(key);
                         WriteJson(categoryDirectory.FullName + "/" + entity.Identifier + ".animation_controllers.json", entity.GenerateResourcePackAnimationControllers());

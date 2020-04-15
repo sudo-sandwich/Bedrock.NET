@@ -42,6 +42,14 @@ namespace Bedrock.Entities {
         public EntityEvent EntityTransformed { get; } = new EntityEvent("minecraft:entity_transformed");
         public EntityEvent OnPrime { get; } = new EntityEvent("minecraft:on_prime");
 
+        //DEPRECATED, use Entity(string prefix, string identifier) instead. THIS WILL BE REMOVED IN A FUTURE UPDATE
+        public Entity() { }
+
+        public Entity(string prefix, string identifier) {
+            Prefix = prefix;
+            Identifier = identifier;
+        }
+
         public bool HasBehaviorPackAnimationTimelines {
             get {
                 foreach (IAnimateScript animateScript in BehaviorPackAnimations) {

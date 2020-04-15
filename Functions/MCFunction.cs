@@ -38,14 +38,19 @@ namespace Bedrock.Functions {
         }
 
         private class Function : Command {
-            public MCFunction MCFunction { get; private set; }
+            public MCFunction function { get; private set; }
 
             public Function(MCFunction mcFunction) {
-                MCFunction = mcFunction;
+                function = mcFunction;
             }
 
             public override string ToString() {
-                return CommandHelper.Build("function", MCFunction.FunctionName);
+                //this if statement is here just becuase of some legacy code in the area 51 project. should only use MCFunction.FunctionName
+                if (function.FunctionName != null) {
+                    return CommandHelper.Build("function", function.FunctionName);
+                } else {
+                    return CommandHelper.Build("function", function.Name);
+                }
             }
         }
     }

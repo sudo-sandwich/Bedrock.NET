@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Bedrock.Utility;
+using System;
 using System.Collections.Generic;
 using System.Text;
 
@@ -11,13 +12,10 @@ namespace Bedrock.Functions.Commands {
         public string Block { get; private set; }
         public int? Data { get; private set; }
 
-        private readonly string output;
-
         public Execute(TargetSelector selector, Position position, Command command) {
             Selector = selector;
             Position = position;
             Command = command;
-            output = Utility.CommandHelper.Build("execute", Selector, Position, Command);
         }
 
         public Execute(TargetSelector selector, Command command) : this(selector, Position.Self, command) { }
@@ -29,11 +27,14 @@ namespace Bedrock.Functions.Commands {
             Block = block;
             Data = data;
             Command = command;
-            output = Utility.CommandHelper.Build("execute", Selector, Position, "detect", DetectPos, Block, Data, Command);
         }
 
         public override string ToString() {
-            return output;
+            if (DetectPos != null && Block != null && Data != null) {
+                return CommandHelper.Build("execute", Selector, Position, "detect", DetectPos, Block, Data, Command);
+            } else {
+                return CommandHelper.Build("execute", Selector, Position, Command);
+            }
         }
     }
 }
