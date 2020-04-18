@@ -125,7 +125,6 @@ namespace Bedrock.Files {
             Console.WriteLine("Linking full function names to function objects...");
             foreach (string key in Functions.Keys) {
                 foreach (MCFunction mcFunction in Functions[key]) {
-                    Console.WriteLine(mcFunction.Name);
                     mcFunction.FunctionName = key + "/" + mcFunction.Name;
                 }
             }
@@ -134,7 +133,7 @@ namespace Bedrock.Files {
                 DirectoryInfo directoryToPlaceIn = key.Length == 0 ? functions : functions.CreateSubdirectory(key);
                 foreach (MCFunction mcFunction in Functions[key]) {
                     Console.WriteLine("\tWriting " + key + "/" + mcFunction.Name + ".mcfunction...");
-                    File.WriteAllText(directoryToPlaceIn.FullName + "/" + mcFunction.Name + ".mcfunction", mcFunctionGenerationMessage + "\n" + mcFunction.ToString());
+                    WriteFunction(directoryToPlaceIn.FullName + "/" + mcFunction.Name + ".mcfunction", mcFunction);
                 }
             }
 
@@ -200,6 +199,10 @@ namespace Bedrock.Files {
                     }
                 }
             }
+        }
+
+        private static void WriteFunction(string path, MCFunction function) {
+            File.WriteAllText(path, mcFunctionGenerationMessage + "\n" + function.ToString());
         }
 
         private static void WriteJson(string path, JToken jToken) {
