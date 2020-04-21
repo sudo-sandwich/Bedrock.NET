@@ -4,6 +4,7 @@ using Bedrock.Utility;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Linq;
 using System.Text;
 
 namespace Bedrock.Functions.Commands {
@@ -74,8 +75,8 @@ namespace Bedrock.Functions.Commands {
                 _maxRotY = value;
             }
         }
-        public ScoreSelector[] Scores { get; set; }
-        public string[] Tags { get; set; }
+        public IList<ScoreSelector> Scores { get; set; } = new List<ScoreSelector>();
+        public IList<Tag> Tags { get; set; } = new List<Tag>();
         private Entity _type;
         public Entity Type {
             get {
@@ -104,6 +105,12 @@ namespace Bedrock.Functions.Commands {
             Target = target;
         }
 
+        //short for new TargetSelector(Target.AllEntities) { Type = type }
+        public TargetSelector(Entity type) {
+            Target = Target.AllEntities;
+            Type = type;
+        }
+
         public override string ToString() {
             IList<string> arguments = new List<string>();
             if (Count != null) arguments.Add("c = " + Count);
@@ -124,18 +131,18 @@ namespace Bedrock.Functions.Commands {
             if (X != null) arguments.Add("x = " + X);
             if (Y != null) arguments.Add("y = " + Y);
             if (Z != null) arguments.Add("z = " + Z);
-            if (Tags != null) {
-                foreach (string tag in Tags) {
-                    arguments.Add("tag = " + tag);
-                }
+
+            foreach (string tag in Tags) {
+                arguments.Add("tag = " + tag);
             }
-            if (Scores != null) {
+
+            if (Scores.Count > 0) {
                 StringBuilder stringBuilder = new StringBuilder("scores = {");
                 foreach (ScoreSelector score in Scores) {
                     stringBuilder.Append(score.ToString());
                 }
                 stringBuilder.Append("}");
-                arguments.Add("scores = {" + string.Join(", ", (object[])Scores) + "}");
+                arguments.Add("scores = {" + string.Join(", ", Scores.Select(s => s.ToString())) + "}");
             }
 
             return Target.GetDescription() + (arguments.Count > 0 ? "[" + string.Join(", ", arguments) + "]" : "");

@@ -121,13 +121,17 @@ namespace Bedrock.Files {
             Console.ForegroundColor = ConsoleColor.Black;
             Console.WriteLine("Generating functions... ");
             Console.BackgroundColor = ConsoleColor.Black;
-            Console.ForegroundColor = ConsoleColor.DarkGreen;
+            Console.ForegroundColor = ConsoleColor.White;
             Console.WriteLine("Linking full function names to function objects...");
+            Console.ForegroundColor = ConsoleColor.DarkGreen;
             foreach (string key in Functions.Keys) {
                 foreach (MCFunction mcFunction in Functions[key]) {
+                    Console.WriteLine("\tLinking " + mcFunction.Name + " to " + key + "...");
                     mcFunction.FunctionName = key + "/" + mcFunction.Name;
                 }
             }
+            Console.ForegroundColor = ConsoleColor.White;
+            Console.WriteLine("Writing functions...");
             Console.ForegroundColor = ConsoleColor.Magenta;
             foreach (string key in Functions.Keys) {
                 DirectoryInfo directoryToPlaceIn = key.Length == 0 ? functions : functions.CreateSubdirectory(key);
@@ -138,7 +142,8 @@ namespace Bedrock.Files {
             }
 
             IDictionary<string, IList<Entity>> entitiesToWrite = new Dictionary<string, IList<Entity>>(Entities);
-            Console.ForegroundColor = ConsoleColor.White;
+            Console.BackgroundColor = ConsoleColor.White;
+            Console.ForegroundColor = ConsoleColor.Black;
             Console.WriteLine("Generating EntityTemplates...");
             foreach (string key in EntityTemplates.Keys) {
                 if (!Entities.ContainsKey(key)) {
@@ -150,50 +155,49 @@ namespace Bedrock.Files {
             }
 
             foreach (string key in entitiesToWrite.Keys) {
-                Console.BackgroundColor = ConsoleColor.White;
-                Console.ForegroundColor = ConsoleColor.Black;
-                Console.WriteLine("Generating " + (key.Length == 0 ? "uncategorized" : key) + " entities...");
+                Console.ForegroundColor = ConsoleColor.White;
                 Console.BackgroundColor = ConsoleColor.Black;
+                Console.WriteLine("Generating " + (key.Length == 0 ? "uncategorized" : key) + " entities...");
                 foreach (Entity entity in entitiesToWrite[key]) {
                     Console.ForegroundColor = ConsoleColor.Yellow;
-                    Console.WriteLine("Writing " + entity.Identifier + "...");
+                    Console.WriteLine("\tWriting " + entity.Identifier + "...");
 
                     Console.ForegroundColor = ConsoleColor.Green;
-                    Console.WriteLine("\tWriting behavior...");
+                    Console.WriteLine("\t\tWriting behavior...");
                     DirectoryInfo categoryDirectory = key.Length == 0 ? behaviors : behaviors.CreateSubdirectory(key);
                     WriteJson(categoryDirectory.FullName + "/" + entity.Identifier + ".behavior.json", entity.GenerateBehavior());
 
                     Console.ForegroundColor = ConsoleColor.Blue;
                     if (entity.HasBehaviorPackAnimationTimelines) {
-                        Console.WriteLine("\tWriting behavior pack animation timelines...");
+                        Console.WriteLine("\t\tWriting behavior pack animation timelines...");
                         categoryDirectory = key.Length == 0 ? behaviorPackAnimationTimelines : behaviorPackAnimationTimelines.CreateSubdirectory(key);
                         WriteJson(categoryDirectory.FullName + "/" + entity.Identifier + ".animations.json", entity.GenerateBehaviorPackAnimationTimelines());
                     }
 
                     Console.ForegroundColor = ConsoleColor.Cyan;
                     if (entity.HasBehaviorPackAnimationControllers) {
-                        Console.WriteLine("\tWriting behavior pack animation controllers...");
+                        Console.WriteLine("\t\tWriting behavior pack animation controllers...");
                         categoryDirectory = key.Length == 0 ? behaviorPackAnimationControllers : behaviorPackAnimationControllers.CreateSubdirectory(key);
                         WriteJson(categoryDirectory.FullName + "/" + entity.Identifier + ".animation_controllers.json", entity.GenerateBehaviorPackAnimationControllers());
                     }
 
                     Console.ForegroundColor = ConsoleColor.DarkYellow;
                     if (entity.HasClientEntity) {
-                        Console.WriteLine("\tWriting client entity...");
+                        Console.WriteLine("\t\tWriting client entity...");
                         categoryDirectory = key.Length == 0 ? clientEntities : clientEntities.CreateSubdirectory(key);
                         WriteJson(categoryDirectory.FullName + "/" + entity.Identifier + ".entity.json", entity.GenerateClientEntity());
                     }
 
                     Console.ForegroundColor = ConsoleColor.DarkMagenta;
                     if (entity.HasRenderControllers) {
-                        Console.WriteLine("\tWriting render controllers...");
+                        Console.WriteLine("\t\tWriting render controllers...");
                         categoryDirectory = key.Length == 0 ? renderControllers : renderControllers.CreateSubdirectory(key);
                         WriteJson(categoryDirectory.FullName + "/" + entity.Identifier + ".render_controllers.json", entity.GenerateRenderControllers());
                     }
 
                     Console.ForegroundColor = ConsoleColor.DarkCyan;
                     if (entity.HasResourcePackAnimationControllers) {
-                        Console.WriteLine("\tWriting resource pack animation controllers...");
+                        Console.WriteLine("\t\tWriting resource pack animation controllers...");
                         categoryDirectory = key.Length == 0 ? resourcePackAnimationControllers : resourcePackAnimationControllers.CreateSubdirectory(key);
                         WriteJson(categoryDirectory.FullName + "/" + entity.Identifier + ".animation_controllers.json", entity.GenerateResourcePackAnimationControllers());
                     }

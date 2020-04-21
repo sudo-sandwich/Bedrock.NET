@@ -1,4 +1,5 @@
-﻿using Newtonsoft.Json.Linq;
+﻿using Bedrock.Utility;
+using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -41,7 +42,7 @@ namespace Bedrock.Entities.Animations {
                 foreach (IEvent stepEvent in step.Events) {
                     events.Add(stepEvent.Expression);
                 }
-                timeline.Add(step.Time.ToString(), events);
+                timeline.Add(step.Time.ToString(FormatStrings.DoubleFixedPoint), events);
             }
 
             return new JProperty(LongName, jObject);

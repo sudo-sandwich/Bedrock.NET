@@ -49,11 +49,11 @@ namespace Bedrock.Utility {
                 Identifier = AttachedEntity.Identifier,
                 IsSpawnable = false
             };
-            entity.MainComponents.Add(new Despawn() { Filter = new Filter(Group.AllOf, new HasTag(Subject.Self, Test.Equal, "despawn")) });
+            entity.MainComponents.Add(new Despawn() { Filter = new Filter(Group.AllOf, new HasTag(Subject.Self, Test.Equal, TagManager.Despawn)) });
             //entity.MainComponents.Add(new TickWorld());
 
             if (!Loop) {
-                Steps[Steps.Count - 1].Events.Add(new TagAdd(TargetSelector.Self, "despawn"));
+                Steps[Steps.Count - 1].Events.Add(new TagAdd(TargetSelector.Self, TagManager.Despawn));
             }
             AnimationTimeline animationTimeline = entity.CreateBehaviorAnimationTimeline(entity.Identifier, "animation." + entity.Identifier + ".commands", Length ?? Steps[Steps.Count - 1].Time + 5, Loop);
             animationTimeline.Timeline.AddRange(Steps);

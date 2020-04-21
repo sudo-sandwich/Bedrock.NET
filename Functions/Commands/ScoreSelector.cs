@@ -22,14 +22,6 @@ namespace Bedrock.Functions.Commands {
             RangeType = Equality.Range;
         }
 
-        public static implicit operator ScoreSelector[](ScoreSelector s) {
-            return s?.To();
-        }
-
-        public ScoreSelector[] To() {
-            return new ScoreSelector[] { this };
-        }
-
         public override string ToString() {
             string toReturn = Name + " = ";
             switch (RangeType) {

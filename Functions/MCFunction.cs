@@ -15,7 +15,7 @@ namespace Bedrock.Functions {
 
         public string Expression {
             get {
-                return "/function " + Name;
+                return "/" + ToCommand().ToString();
             }
         }
 
