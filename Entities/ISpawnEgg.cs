@@ -3,8 +3,8 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace Bedrock.Entities.Animations {
-    public interface IEvent {
-        JToken Expression { get; }
+namespace Bedrock.Entities {
+    public interface ISpawnEgg {
+        JObject ToJObject();
     }
 }

@@ -19,8 +19,7 @@ namespace Bedrock.Entities {
         public bool IsSummonable { get; set; } = true;
         public bool? IsExperimental { get; set; }
 
-        public string SpawnEggBaseColor { get; set; }
-        public string SpawnEggOverlayColor { get; set; }
+        public ISpawnEgg SpawnEgg { get; set; }
 
         public string Geometry { get; set; }
         public string Material { get; set; }
@@ -32,7 +31,7 @@ namespace Bedrock.Entities {
         public IList<string> ResourcePreAnimationScripts { get; } = new List<string>();
 
         public IList<ComponentGroup> ComponentGroups { get; } = new List<ComponentGroup>();
-        public ComponentGroup MainComponents { get; set; } = new ComponentGroup("components");
+        public ComponentGroup MainComponents { get; } = new ComponentGroup("components");
 
         public IList<EntityEvent> Events { get; } = new List<EntityEvent>();
 
@@ -230,12 +229,8 @@ namespace Bedrock.Entities {
             minecraftClientEntity.Add(new JProperty("description", description));
 
             description.Add("identifier", FullIdentifier);
-            if (SpawnEggBaseColor != null && SpawnEggOverlayColor != null) {
-                JObject spawnEgg = new JObject {
-                    { "base_color", SpawnEggBaseColor },
-                    { "overlay_color", SpawnEggOverlayColor }
-                };
-                description.Add(new JProperty("spawn_egg", spawnEgg));
+            if (SpawnEgg != null) {
+                description.Add(new JProperty("spawn_egg", SpawnEgg.ToJObject()));
             }
             description.Add("render_controllers", new JArray("controller.render." + Identifier));
             description.Add(new JProperty("geometry", new JObject() { { "default", Geometry } }));
@@ -252,9 +247,18 @@ namespace Bedrock.Entities {
                 scripts.Add("animate", animate);
 
                 ISet<IAnimation> animationSet = new HashSet<IAnimation>();
+                ISet<ParticleDescription> particleSet = new HashSet<ParticleDescription>();
                 foreach (IAnimateScript animateScript in ResourcePackAnimations) {
                     foreach (IAnimation animation in animateScript.Animations) {
                         animationSet.Add(animation);
+
+                        if (animation is AnimationController) {
+                            foreach (AnimationState state in ((AnimationController)animation).States) {
+                                foreach (ParticleEffect effect in state.ParticleEffects) {
+                                    particleSet.Add(effect.Particle);
+                                }
+                            }
+                        }
                     }
 
                     animate.Add(animateScript.GenerateScript());
@@ -264,6 +268,15 @@ namespace Bedrock.Entities {
 
                 foreach (IAnimation animation in animationSet) {
                     animations.Add(animation.ShortName, animation.LongName);
+                }
+
+                if (particleSet.Count > 0) {
+                    JObject particleEffects = new JObject();
+                    description.Add(new JProperty("particle_effects", particleEffects));
+                    
+                    foreach (ParticleDescription particleDescription in particleSet) {
+                        particleEffects.Add(particleDescription.ShortName, particleDescription.LongName);
+                    }
                 }
             }
 

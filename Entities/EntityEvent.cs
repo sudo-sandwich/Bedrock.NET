@@ -10,9 +10,9 @@ using System.Threading.Tasks;
 namespace Bedrock.Entities {
     public class EntityEvent : IEvent {
         public string Name { get; set; }
-        public string Expression {
+        public JToken Expression {
             get {
-                return Name;
+                return "@s" + Name;
             }
         }
         public IList<ComponentGroup> ComponentsToAdd { get; set; } = new List<ComponentGroup>();

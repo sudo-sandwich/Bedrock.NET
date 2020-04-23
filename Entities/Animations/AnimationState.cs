@@ -9,6 +9,7 @@ namespace Bedrock.Entities.Animations {
         public IList<AnimationBlend> Animations { get; } = new List<AnimationBlend>();
         public IList<IEvent> OnEntry { get; } = new List<IEvent>();
         public IList<IEvent> OnExit { get; } = new List<IEvent>();
+        public IList<ParticleEffect> ParticleEffects { get; } = new List<ParticleEffect>();
         public IList<AnimationStateTransition> Transitions { get; } = new List<AnimationStateTransition>();
         public double? BlendTransition { get; set; }
 
@@ -44,6 +45,15 @@ namespace Bedrock.Entities.Animations {
 
                 foreach (IEvent e in OnExit) {
                     onExit.Add(e.Expression);
+                }
+            }
+
+            if (ParticleEffects.Count > 0) {
+                JArray particleEffects = new JArray();
+                jObject.Add("particle_effects", particleEffects);
+
+                foreach (ParticleEffect effect in ParticleEffects) {
+                    particleEffects.Add(effect.Expression);
                 }
             }
 

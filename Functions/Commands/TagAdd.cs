@@ -6,9 +6,9 @@ using System.Text;
 namespace Bedrock.Functions.Commands {
     public class TagAdd : Command {
         public TargetSelector Targets { get; private set; }
-        public string Tag { get; private set; }
+        public Tag Tag { get; private set; }
 
-        public TagAdd(TargetSelector targets, string tag) {
+        public TagAdd(TargetSelector targets, Tag tag) {
             Targets = targets;
             Tag = tag;
         }

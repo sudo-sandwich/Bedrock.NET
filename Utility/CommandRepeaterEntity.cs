@@ -16,12 +16,17 @@ namespace Bedrock.Utility {
         public double Frequency { get; private set; }
         public IList<IEvent> Commands { get; private set; }
 
+        public Tag TagAs { get; private set; }
         public Tag WhileActive { get; private set; } //tags this entity while it is executing commands
 
-        public CommandRepeaterEntity(string prefix, string identifier, params IEvent[] commands) : this(prefix, identifier, 0.05, commands) { }
+        //default value for TagAs is null. default value for Frequency is 0.05.
+        public CommandRepeaterEntity(string prefix, string identifier, params IEvent[] commands) : this(prefix, identifier, null, 0.05, commands) { }
+        public CommandRepeaterEntity(string prefix, string identifier, Tag tagAs, params IEvent[] commands) : this(prefix, identifier, tagAs, 0.05, commands) { }
+        public CommandRepeaterEntity(string prefix, string identifier, double frequency, params IEvent[] commands) : this(prefix, identifier, null, frequency, commands) { }
 
-        public CommandRepeaterEntity(string prefix, string identifier, double frequency, params IEvent[] commands) {
+        public CommandRepeaterEntity(string prefix, string identifier, Tag tagAs, double frequency, params IEvent[] commands) {
             AttachedEntity = new Entity(prefix, identifier);
+            TagAs = tagAs;
             Frequency = frequency;
             Commands = new List<IEvent>(commands);
         }
@@ -43,6 +48,7 @@ namespace Bedrock.Utility {
             entity.MainComponents.Add(new Despawn() { Filter = new Filter(Group.AllOf, new HasTag(Subject.Self, Test.Equal, TagManager.Despawn)) });
             //entity.MainComponents.Add(new TickWorld());
 
+            //create timeline for commands
             AnimationTimeline animationTimeline = entity.CreateBehaviorAnimationTimeline(entity.Identifier, "animation." + entity.Identifier + ".commands", Frequency, true);
             TimelineStep commandsStep = new TimelineStep(0);
             if (WhileActive != null) {
@@ -53,6 +59,14 @@ namespace Bedrock.Utility {
                 commandsStep.Events.AddRange(Commands);
             }
             animationTimeline.Timeline.Add(commandsStep);
+
+            //tag self on spawn
+            if (TagAs != null) {
+                AnimationController animationController = entity.CreateBehaviorAnimationController("tag_as", "controller.animation." + entity.Identifier);
+                AnimationState tagState = animationController.CreateState("tagger");
+                animationController.InitialState = tagState;
+                tagState.OnEntry.Add(new TagAdd(TargetSelector.Self, TagAs));
+            }
 
             return entity;
         }

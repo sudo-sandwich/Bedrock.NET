@@ -7,7 +7,6 @@ using System.Text.RegularExpressions;
 namespace Bedrock.Utility {
     public class TagManager {
         public static readonly Tag Despawn = new Tag("despawn", true);
-        public const string UniqueTagPrefix = "bedrock.net_unique_tag_";
         private static readonly Regex ValidCharacters = new Regex(@"^[-_\+\.A-Za-z0-9]*$");
         public int NumUniqueTags { get; private set; }
         private HashSet<string> _tags { get; set; }
@@ -29,16 +28,8 @@ namespace Bedrock.Utility {
             if (_tags.Contains(value)) {
                 throw new Exception("Tag already exists.");
             }
-            if (value.StartsWith(UniqueTagPrefix)) {
-                throw new Exception("This tag is reserved by Bedrock.NET. Use a different tag.");
-            }
 
             return new Tag(value, true);
-        }
-
-        public Tag CreateUnique() {
-            NumUniqueTags++;
-            return new Tag(UniqueTagPrefix + (NumUniqueTags - 1), true);
         }
     }
 }

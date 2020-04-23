@@ -1,6 +1,7 @@
 ﻿using Bedrock.Entities.Animations;
 using Bedrock.Functions.Commands;
 using Bedrock.Utility;
+using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,7 +14,7 @@ namespace Bedrock.Functions {
 
         internal string FunctionName { get; set; }
 
-        public string Expression {
+        public JToken Expression {
             get {
                 return "/" + ToCommand().ToString();
             }
