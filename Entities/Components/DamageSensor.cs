@@ -1,4 +1,5 @@
-﻿using Newtonsoft.Json.Linq;
+﻿using Bedrock.Utility;
+using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,16 +14,21 @@ namespace Bedrock.Entities.Components {
             }
         }
 
-        public DamageSensorTrigger[] Triggers { get; set; }
+        public IList<DamageSensorTrigger> Triggers { get; set; } = new List<DamageSensorTrigger>();
 
         public DamageSensor(params DamageSensorTrigger[] triggers) {
-            Triggers = triggers;
+            Triggers.AddRange(triggers);
         }
 
         public JProperty Generate() {
             JObject jObject = new JObject();
 
-            if (Triggers != null && Triggers.Length > 0) jObject.Add("triggers", JArray.FromObject(Array.ConvertAll(Triggers, item => (JObject)item)));
+            JArray triggers = new JArray();
+            jObject.Add("triggers", triggers);
+
+            foreach (DamageSensorTrigger trigger in Triggers) {
+                triggers.Add(trigger);
+            }
 
             return new JProperty(Name, jObject);
         }

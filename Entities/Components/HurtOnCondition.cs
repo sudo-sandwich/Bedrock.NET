@@ -1,6 +1,7 @@
 ﻿using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 
 namespace Bedrock.Entities.Components {
@@ -11,7 +12,7 @@ namespace Bedrock.Entities.Components {
             }
         }
 
-        public DamageCondition[] DamageConditions { get; set; }
+        public IList<DamageCondition> DamageConditions { get; set; } = new List<DamageCondition>();
 
         public HurtOnCondition(params DamageCondition[] damageConditions) {
             DamageConditions = damageConditions;
@@ -20,7 +21,7 @@ namespace Bedrock.Entities.Components {
         public JProperty Generate() {
             JObject jObject = new JObject();
 
-            if (DamageConditions != null && DamageConditions.Length > 0) jObject.Add("damage_conditions", JArray.FromObject(Array.ConvertAll(DamageConditions, item => (JObject)item)));
+            if (DamageConditions != null && DamageConditions.Count > 0) jObject.Add("damage_conditions", JArray.FromObject(DamageConditions.Select(item => (JObject)item)));
 
             return new JProperty(Name, jObject);
         }
