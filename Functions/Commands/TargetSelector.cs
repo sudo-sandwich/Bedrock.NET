@@ -107,6 +107,9 @@ namespace Bedrock.Functions.Commands {
 
         //short for new TargetSelector(Target.AllEntities) { Type = type }
         public TargetSelector(Entity type) {
+            if (type == null) {
+                throw new Exception("Type is null.");
+            }
             Target = Target.AllEntities;
             Type = type;
         }
