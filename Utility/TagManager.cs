@@ -23,11 +23,13 @@ namespace Bedrock.Utility {
 
         public Tag Create(string value) {
             if (!ValidCharacters.IsMatch(value)) {
-                throw new Exception("Tag has invalid characters.");
+                throw new Exception("Tag " + value + " has invalid characters.");
             }
             if (_tags.Contains(value)) {
-                throw new Exception("Tag already exists.");
+                throw new Exception("Tag " + value + " already exists.");
             }
+
+            _tags.Add(value);
 
             return new Tag(value, true);
         }
