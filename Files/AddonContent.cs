@@ -126,8 +126,13 @@ namespace Bedrock.Files {
             Console.ForegroundColor = ConsoleColor.DarkGreen;
             foreach (string key in Functions.Keys) {
                 foreach (MCFunction mcFunction in Functions[key]) {
-                    Console.WriteLine("\tLinking " + mcFunction.Name + " to " + key + "...");
-                    mcFunction.FunctionName = key + "/" + mcFunction.Name;
+                    if (key.Length > 0) {
+                        Console.WriteLine("\tLinking " + mcFunction.Name + " to " + key + "...");
+                        mcFunction.FunctionName = key + "/" + mcFunction.Name;
+                    } else {
+                        Console.WriteLine("\tLinking " + mcFunction.Name + " to (base)...");
+                        mcFunction.FunctionName = mcFunction.Name;
+                    }
                 }
             }
             Console.ForegroundColor = ConsoleColor.White;
