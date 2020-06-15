@@ -141,7 +141,7 @@ namespace Bedrock.Files {
             foreach (string key in Functions.Keys) {
                 DirectoryInfo directoryToPlaceIn = key.Length == 0 ? functions : functions.CreateSubdirectory(key);
                 foreach (MCFunction mcFunction in Functions[key]) {
-                    Console.WriteLine("\tWriting " + key + "/" + mcFunction.Name + ".mcfunction...");
+                    Console.WriteLine("\tWriting " + (key.Length > 0 ? key + "/" : "") + mcFunction.Name + ".mcfunction...");
                     WriteFunction(directoryToPlaceIn.FullName + "/" + mcFunction.Name + ".mcfunction", mcFunction);
                 }
             }

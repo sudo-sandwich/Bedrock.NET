@@ -12,6 +12,7 @@ namespace Bedrock.Functions {
         public string Name { get; set; }
         public IList<Command> Commands { get; } = new List<Command>();
 
+        //this value should be assigned by AddonContent only
         internal string FunctionName { get; set; }
 
         public JToken Expression {
@@ -50,6 +51,10 @@ namespace Bedrock.Functions {
                 if (function.FunctionName != null) {
                     return CommandHelper.Build("function", function.FunctionName);
                 } else {
+                    //remove this else block after Area 51 is complete
+                    if (function.Name.StartsWith("npc_dialogue_")) {
+                        return CommandHelper.Build("function", "dialogue/" + function.Name);
+                    }
                     return CommandHelper.Build("function", function.Name);
                 }
             }
