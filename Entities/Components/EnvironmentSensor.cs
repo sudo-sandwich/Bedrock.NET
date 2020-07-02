@@ -11,7 +11,7 @@ namespace Bedrock.Entities.Components {
             }
         }
 
-        public EnvironmentTrigger[] Triggers { get; set; }
+        public IList<EnvironmentTrigger> Triggers { get; set; } = new List<EnvironmentTrigger>();
 
         public EnvironmentSensor(params EnvironmentTrigger[] triggers) {
             Triggers = triggers;
@@ -20,7 +20,11 @@ namespace Bedrock.Entities.Components {
         public JProperty Generate() {
             JObject jObject = new JObject();
 
-            if (Triggers != null && Triggers.Length > 0) jObject.Add("triggers", JArray.FromObject(Array.ConvertAll(Triggers, item => (JToken)item)));
+            JArray triggersJArray = new JArray();
+            foreach (EnvironmentTrigger trigger in Triggers) {
+                triggersJArray.Add(trigger);
+            }
+            if (Triggers != null && Triggers.Count > 0) jObject.Add("triggers", triggersJArray);
 
             return new JProperty(Name, jObject);
         }
