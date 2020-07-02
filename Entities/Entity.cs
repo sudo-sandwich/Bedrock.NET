@@ -52,6 +52,7 @@ namespace Bedrock.Entities {
         public bool HasBehaviorPackAnimationTimelines {
             get {
                 foreach (IAnimateScript animateScript in BehaviorPackAnimations) {
+                    foreach ()
                     if (animateScript is AnimationTimeline) {
                         return true;
                     }
@@ -186,7 +187,7 @@ namespace Bedrock.Entities {
             if (ComponentGroups.Count > 0) {
                 JObject componentGroups = new JObject();
                 minecraftEntity.Add(new JProperty("component_groups", componentGroups));
-                foreach (ComponentGroup componentGroup in ComponentGroups.OrderBy(cg => cg.Name)) {
+                foreach (ComponentGroup componentGroup in ComponentGroups) {
                     componentGroups.Add(componentGroup.Generate());
                 }
             }
@@ -194,7 +195,7 @@ namespace Bedrock.Entities {
             if (MainComponents.Count > 0) {
                 JObject components = new JObject();
                 minecraftEntity.Add(new JProperty("components", components));
-                foreach (IComponent component in MainComponents.Components.OrderBy(c => c.Name)) {
+                foreach (IComponent component in MainComponents.Components) {
                     components.Add(component.Generate());
                 }
             }

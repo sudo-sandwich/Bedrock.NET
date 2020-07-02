@@ -1,4 +1,5 @@
-﻿using Newtonsoft.Json.Linq;
+﻿using Bedrock.Utility;
+using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -14,18 +15,14 @@ namespace Bedrock.Entities.Components {
         public IList<EnvironmentTrigger> Triggers { get; set; } = new List<EnvironmentTrigger>();
 
         public EnvironmentSensor(params EnvironmentTrigger[] triggers) {
-            Triggers = triggers;
+            Triggers.AddRange(triggers);
         }
 
         public JProperty Generate() {
             JObject jObject = new JObject();
 
             if (Triggers != null && Triggers.Count > 0) {
-                JArray triggersJArray = new JArray();
-                foreach (EnvironmentTrigger trigger in Triggers) {
-                    triggersJArray.Add(trigger);
-                }
-                jObject.Add("triggers", triggersJArray);
+                jObject.Add("triggers", Triggers.ToJArray());
             }
 
             return new JProperty(Name, jObject);

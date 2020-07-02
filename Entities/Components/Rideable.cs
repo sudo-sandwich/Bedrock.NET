@@ -15,14 +15,14 @@ namespace Bedrock.Entities.Components {
         public int? SeatCount { get; set; }
         public bool? CrouchingSkipInteract { get; set; }
         public string InteractText { get; set; }
-        public string[] FamilyTypes { get; set; }
+        public IList<string> FamilyTypes { get; set; } = new List<string>();
         public int? ControllingSeat { get; set; }
         public bool? PullInEntities { get; set; }
         public bool? RiderCanInteract { get; set; }
-        public RideableSeat[] Seats { get; set; }
+        public IList<RideableSeat> Seats { get; set; } = new List<RideableSeat>();
 
         public Rideable(params RideableSeat[] seats) {
-            Seats = seats;
+            Seats.AddRange(seats);
         }
 
         public JProperty Generate() {
@@ -34,8 +34,11 @@ namespace Bedrock.Entities.Components {
             jObject.AddIfNotNull("controlling_seat", ControllingSeat);
             jObject.AddIfNotNull("pull_in_entities", PullInEntities);
             jObject.AddIfNotNull("rider_can_interact", RiderCanInteract);
-            if (FamilyTypes != null && FamilyTypes.Length > 0) jObject.Add("family_types", new JArray(FamilyTypes));
-            if (Seats != null && Seats.Length > 0) jObject.Add("seats", JArray.FromObject(Array.ConvertAll(Seats, item => (JObject)item)));
+            if (FamilyTypes != null && FamilyTypes.Count > 0) jObject.Add("family_types", new JArray(FamilyTypes));
+
+            if (Seats != null && Seats.Count > 0) {
+                jObject.Add("seats", Seats.ToJArray());
+            }
 
             return new JProperty(Name, jObject);
         }
