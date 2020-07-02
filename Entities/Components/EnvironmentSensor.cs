@@ -20,11 +20,13 @@ namespace Bedrock.Entities.Components {
         public JProperty Generate() {
             JObject jObject = new JObject();
 
-            JArray triggersJArray = new JArray();
-            foreach (EnvironmentTrigger trigger in Triggers) {
-                triggersJArray.Add(trigger);
+            if (Triggers != null && Triggers.Count > 0) {
+                JArray triggersJArray = new JArray();
+                foreach (EnvironmentTrigger trigger in Triggers) {
+                    triggersJArray.Add(trigger);
+                }
+                jObject.Add("triggers", triggersJArray);
             }
-            if (Triggers != null && Triggers.Count > 0) jObject.Add("triggers", triggersJArray);
 
             return new JProperty(Name, jObject);
         }
