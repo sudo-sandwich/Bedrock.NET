@@ -71,5 +71,18 @@ namespace Bedrock.Utility {
                 }
             }
         }
+
+        //converts a list of IJToken to a list of JToken
+        public static JArray ToJArray<T>(this ICollection<T> collection) where T : IJToken {
+            if (collection != null) {
+                JArray jArray = new JArray();
+                foreach (T element in collection) {
+                    jArray.Add(element.ToJToken());
+                }
+                return jArray;
+            } else {
+                return null;
+            }
+        }
     }
 }
