@@ -55,6 +55,11 @@ namespace Bedrock.Entities {
                     if (animateScript is AnimationTimeline) {
                         return true;
                     }
+                    foreach (IAnimation animation in animateScript.Animations) {
+                        if (animation is AnimationTimeline) {
+                            return true;
+                        }
+                    }
                 }
                 return false;
             }
@@ -307,11 +312,22 @@ namespace Bedrock.Entities {
             JObject animations = new JObject();
             jObject.Add(new JProperty("animations", animations));
 
+            ISet<AnimationTimeline> animationTimelines = new HashSet<AnimationTimeline>();
             foreach (IAnimateScript animateScript in BehaviorPackAnimations) {
                 AnimationTimeline animationTimeline = animateScript as AnimationTimeline;
                 if (animationTimeline != null) {
-                    animations.Add(animationTimeline.Generate());
+                    animationTimelines.Add(animationTimeline);
                 }
+                foreach (IAnimation animation in animateScript.Animations) {
+                    animationTimeline = animation as AnimationTimeline;
+                    if (animationTimeline != null) {
+                        animationTimelines.Add(animationTimeline);
+                    }
+                }
+            }
+
+            foreach (AnimationTimeline animationTimeline in animationTimelines) {
+                animations.Add(animationTimeline.Generate());
             }
 
             return jObject;
