@@ -52,7 +52,6 @@ namespace Bedrock.Entities {
         public bool HasBehaviorPackAnimationTimelines {
             get {
                 foreach (IAnimateScript animateScript in BehaviorPackAnimations) {
-                    foreach ()
                     if (animateScript is AnimationTimeline) {
                         return true;
                     }
