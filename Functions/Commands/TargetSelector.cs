@@ -114,6 +114,15 @@ namespace Bedrock.Functions.Commands {
             Type = type;
         }
 
+        //short for new TargetSelector(Target.AllEntities) { Type = type }
+        public TargetSelector(string type) {
+            if (type == null) {
+                throw new Exception("Type is null.");
+            }
+            Target = Target.AllEntities;
+            TypeString = type;
+        }
+
         public override string ToString() {
             IList<string> arguments = new List<string>();
             if (Count != null) arguments.Add("c = " + Count);
