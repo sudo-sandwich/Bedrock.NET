@@ -312,22 +312,16 @@ namespace Bedrock.Entities {
             JObject animations = new JObject();
             jObject.Add(new JProperty("animations", animations));
 
-            ISet<AnimationTimeline> animationTimelines = new HashSet<AnimationTimeline>();
+            ISet<IAnimation> allAnimations = new HashSet<IAnimation>();
             foreach (IAnimateScript animateScript in BehaviorPackAnimations) {
-                AnimationTimeline animationTimeline = animateScript as AnimationTimeline;
-                if (animationTimeline != null) {
-                    animationTimelines.Add(animationTimeline);
-                }
-                foreach (IAnimation animation in animateScript.Animations) {
-                    animationTimeline = animation as AnimationTimeline;
-                    if (animationTimeline != null) {
-                        animationTimelines.Add(animationTimeline);
-                    }
-                }
+                allAnimations.AddRange(animateScript.Animations);
             }
 
-            foreach (AnimationTimeline animationTimeline in animationTimelines) {
-                animations.Add(animationTimeline.Generate());
+            foreach (IAnimation animation in allAnimations) {
+                AnimationTimeline timeline = animation as AnimationTimeline;
+                if (timeline != null) {
+                    animations.Add(timeline.Generate());
+                }
             }
 
             return jObject;
@@ -339,10 +333,15 @@ namespace Bedrock.Entities {
             JObject animationControllersJObject = new JObject();
             jObject.Add(new JProperty("animation_controllers", animationControllersJObject));
 
+            ISet<IAnimation> allAnimations = new HashSet<IAnimation>();
             foreach (IAnimateScript animateScript in BehaviorPackAnimations) {
-                AnimationController animationController = animateScript as AnimationController;
-                if (animationController != null) {
-                    animationControllersJObject.Add(animationController.Generate());
+                allAnimations.AddRange(animateScript.Animations);
+            }
+
+            foreach (IAnimation animation in allAnimations) {
+                AnimationController controller = animation as AnimationController;
+                if (controller != null) {
+                    animationControllersJObject.Add(controller.Generate());
                 }
             }
 
@@ -355,14 +354,33 @@ namespace Bedrock.Entities {
             JObject animationControllersJObject = new JObject();
             jObject.Add(new JProperty("animation_controllers", animationControllersJObject));
 
+            ISet<IAnimation> allAnimations = new HashSet<IAnimation>();
             foreach (IAnimateScript animateScript in ResourcePackAnimations) {
-                AnimationController animationController = animateScript as AnimationController;
-                if (animationController != null) {
-                    animationControllersJObject.Add(animationController.Generate());
+                allAnimations.AddRange(animateScript.Animations);
+            }
+
+            foreach (IAnimation animation in allAnimations) {
+                AnimationController controller = animation as AnimationController;
+                if (controller != null) {
+                    animationControllersJObject.Add(controller.Generate());
                 }
             }
 
             return jObject;
         }
+
+        /*
+        private void GetNestedAnimationControllers(AnimationController controllerToSearch, ISet<AnimationController> controllers) {
+            foreach (AnimationState animationState in controllerToSearch.States) {
+                foreach (AnimationBlend animationBlend in animationState.Animations) {
+                    AnimationController animationController = animationBlend.Animation as AnimationController;
+                    if (animationController != null) {
+                        controllers.Add(animationController);
+                        GetNestedAnimationControllers(animationController, controllers);
+                    }
+                }
+            }
+        }
+        */
     }
 }

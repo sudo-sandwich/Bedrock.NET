@@ -1,4 +1,5 @@
-﻿using Newtonsoft.Json.Linq;
+﻿using Bedrock.Utility;
+using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -18,6 +19,10 @@ namespace Bedrock.Entities.Animations {
                 foreach (AnimationState state in States) {
                     foreach (AnimationBlend animationBlend in state.Animations) {
                         animations.Add(animationBlend.Animation);
+                        AnimationController controller = animationBlend.Animation as AnimationController;
+                        if (controller != null) {
+                            animations.AddRange(controller.Animations);
+                        }
                     }
                 }
                 return animations;
