@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 namespace Bedrock.Entities {
     public class EntityEvent : IEvent {
         public string Name { get; set; }
-        public JToken Expression {
+        public JToken AnimationEvent {
             get {
                 return "@s" + Name;
             }

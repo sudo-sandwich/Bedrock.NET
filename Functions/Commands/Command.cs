@@ -6,7 +6,7 @@ using System.Text;
 
 namespace Bedrock.Functions.Commands {
     public abstract class Command : IEvent {
-        public JToken Expression {
+        public JToken AnimationEvent {
             get {
                 return "/" + ToString();
             }

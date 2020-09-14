@@ -40,7 +40,7 @@ namespace Bedrock.Entities.Animations {
             foreach (TimelineStep step in Timeline) {
                 JArray events = new JArray();
                 foreach (IEvent stepEvent in step.Events) {
-                    events.Add(stepEvent.Expression);
+                    events.Add(stepEvent.AnimationEvent);
                 }
                 timeline.Add(step.Time.ToString(FormatStrings.DoubleFixedPoint), events);
             }

@@ -35,7 +35,7 @@ namespace Bedrock.Entities.Animations {
                 jObject.Add("on_entry", onEntry);
 
                 foreach (IEvent e in OnEntry) {
-                    onEntry.Add(e.Expression);
+                    onEntry.Add(e.AnimationEvent);
                 }
             }
 
@@ -44,7 +44,7 @@ namespace Bedrock.Entities.Animations {
                 jObject.Add("on_exit", onExit);
 
                 foreach (IEvent e in OnExit) {
-                    onExit.Add(e.Expression);
+                    onExit.Add(e.AnimationEvent);
                 }
             }
 

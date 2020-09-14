@@ -5,6 +5,6 @@ using System.Text;
 
 namespace Bedrock.Entities.Animations {
     public interface IEvent {
-        JToken Expression { get; }
+        JToken AnimationEvent { get; }
     }
 }

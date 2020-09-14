@@ -15,7 +15,7 @@ namespace Bedrock.Functions {
         //this value should be assigned by AddonContent only
         internal string FunctionName { get; set; }
 
-        public JToken Expression {
+        public JToken AnimationEvent {
             get {
                 return "/" + ToCommand().ToString();
             }
