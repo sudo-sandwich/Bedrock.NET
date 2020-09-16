@@ -24,6 +24,7 @@ namespace Bedrock.Entities {
         public string Geometry { get; set; }
         public string Material { get; set; }
         public string Texture { get; set; }
+        public OverlayColorMolang OverlayColor { get; set; }
 
         public IList<IAnimateScript> BehaviorPackAnimations { get; } = new List<IAnimateScript>();
         public IList<IAnimateScript> ResourcePackAnimations { get; } = new List<IAnimateScript>();
@@ -302,6 +303,7 @@ namespace Bedrock.Entities {
             defaultRenderController.Add("geometry", "Geometry.default");
             defaultRenderController.Add("materials", new JArray(new JObject() { { "*", "Material.default" } }));
             defaultRenderController.Add("textures", new JArray("Texture.default"));
+            defaultRenderController.AddIfNotNull("overlay_color", OverlayColor);
 
             return jObject;
         }

@@ -23,7 +23,7 @@ namespace Bedrock.Entities.Components {
                 JObject onDamage = new JObject();
                 jObject.Add("on_damage", onDamage);
                 onDamage.AddIfNotNull(Filters);
-                onDamage.AddIfNotNull("event", Event);
+                onDamage.AddIfNotNull("event", Event.Name);
                 onDamage.AddIfNotNull("target", Target);
             }
 

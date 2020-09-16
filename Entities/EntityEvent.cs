@@ -12,7 +12,7 @@ namespace Bedrock.Entities {
         public string Name { get; set; }
         public JToken AnimationEvent {
             get {
-                return "@s" + Name;
+                return "@s " + Name;
             }
         }
         public IList<ComponentGroup> ComponentsToAdd { get; set; } = new List<ComponentGroup>();
