@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Newtonsoft.Json.Linq;
+using System;
 using System.Collections.Generic;
 using System.Text;
 
@@ -26,6 +27,10 @@ namespace Bedrock.Functions {
 
         public Position ToPosition() {
             return new Position(X, Y, Z);
+        }
+
+        public JArray ToJArray() {
+            return new JArray(X, Y, Z);
         }
 
         public Vector3 Add(Vector3 other) {
@@ -84,6 +89,10 @@ namespace Bedrock.Functions {
 
         public static implicit operator Position(Vector3 v3) {
             return v3.ToPosition();
+        }
+
+        public static implicit operator JArray(Vector3 v3) {
+            return v3.ToJArray();
         }
     }
 }

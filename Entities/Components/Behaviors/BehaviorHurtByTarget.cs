@@ -13,11 +13,11 @@ namespace Bedrock.Entities.Components.Behaviors {
         }
 
         public int Priority { get; set; }
-        public EntityTypes[] EntityTypes { get; set; }
+        public EntityType[] EntityTypes { get; set; }
         public bool? AlertSameType { get; set; }
         public bool? HurtOwner { get; set; }
 
-        public BehaviorHurtByTarget(params EntityTypes[] entityTypes) {
+        public BehaviorHurtByTarget(params EntityType[] entityTypes) {
             EntityTypes = entityTypes;
         }
 

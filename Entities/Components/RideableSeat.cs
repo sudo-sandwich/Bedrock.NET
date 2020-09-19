@@ -30,7 +30,7 @@ namespace Bedrock.Entities.Components {
         public JObject ToJObject() {
             JObject jObject = new JObject();
 
-            jObject.Add(new JProperty("position", new JArray(Position.X, Position.Y, Position.Z)));
+            jObject.Add(new JProperty("position", Position.ToJArray()));
             if (MinRiderCount != null) jObject.Add(new JProperty("min_rider_count", MinRiderCount));
             if (MaxRiderCount != null) jObject.Add(new JProperty("max_rider_count", MaxRiderCount));
             if (RotateRiderBy != null) jObject.Add(new JProperty("rotate_rider_by", RotateRiderBy));

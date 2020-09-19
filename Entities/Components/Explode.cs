@@ -32,7 +32,7 @@ namespace Bedrock.Entities.Components {
             jObject.AddIfNotNull("causes_fire", CausesFire);
             jObject.AddIfNotNull("breaks_blocks", BreaksBlocks);
             jObject.AddIfNotNull("fire_affected_by_griefing", FireAffectedByGriefing);
-            jObject.AddIfNotNull("destroy_affectred_by_griefing", DestroyAffectedByGriefing);
+            jObject.AddIfNotNull("destroy_affected_by_griefing", DestroyAffectedByGriefing);
             jObject.AddIfNotNull("allow_damage_underwater", AllowDamageUnderwater);
 
             return new JProperty(Name, jObject);

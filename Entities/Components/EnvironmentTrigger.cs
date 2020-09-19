@@ -17,14 +17,6 @@ namespace Bedrock.Entities.Components {
             Target = target;
         }
 
-        public static implicit operator JObject(EnvironmentTrigger et) {
-            return et?.ToJObject();
-        }
-
-        public static implicit operator JToken(EnvironmentTrigger et) {
-            return et?.ToJToken();
-        }
-
         public JObject ToJObject() {
             JObject jObject = new JObject();
 
@@ -37,6 +29,14 @@ namespace Bedrock.Entities.Components {
 
         public JToken ToJToken() {
             return ToJObject();
+        }
+
+        public static implicit operator JObject(EnvironmentTrigger et) {
+            return et?.ToJObject();
+        }
+
+        public static implicit operator JToken(EnvironmentTrigger et) {
+            return et?.ToJToken();
         }
     }
 }

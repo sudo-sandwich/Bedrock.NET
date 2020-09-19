@@ -6,7 +6,6 @@ using System.Text.RegularExpressions;
 
 namespace Bedrock.Utility {
     public class TagManager {
-        public static readonly Tag Despawn = new Tag("despawn", true);
         private static readonly Regex ValidCharacters = new Regex(@"^[-_\+\.A-Za-z0-9]*$");
         public int NumUniqueTags { get; private set; }
         private HashSet<string> _tags { get; set; }
@@ -18,7 +17,7 @@ namespace Bedrock.Utility {
 
         public TagManager() {
             NumUniqueTags = 0;
-            _tags = new HashSet<string>() { Despawn.Value };
+            _tags = new HashSet<string>();
         }
 
         public Tag Create(string value) {

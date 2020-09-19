@@ -13,7 +13,7 @@ namespace Bedrock.Entities.Components.Behaviors {
         }
 
         public int Priority { get; set; }
-        public EntityTypes[] EntityTypes { get; set; }
+        public EntityType[] EntityTypes { get; set; }
         public double? MaxDist { get; set; }
         public double? MaxFlee { get; set; }
         public double? WalkSpeedMultiplier { get; set; }
@@ -21,7 +21,7 @@ namespace Bedrock.Entities.Components.Behaviors {
         public double? ProbabilityPerStrength { get; set; }
         public bool? IgnoreVisibility { get; set; }
 
-        public BehaviorAvoidMobType(params EntityTypes[] entityTypes) {
+        public BehaviorAvoidMobType(params EntityType[] entityTypes) {
             EntityTypes = entityTypes;
         }
 

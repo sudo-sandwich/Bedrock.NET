@@ -6,7 +6,7 @@ using System.Collections.Generic;
 using System.Text;
 
 namespace Bedrock.Entities.Components {
-    public class InteractOnInteract : IJToken {
+    public class InteractEvent : IJToken {
         public Filter Filters { get; set; }
         public EntityEvent Event { get; set; }
         public string Target { get; set; }
@@ -25,11 +25,11 @@ namespace Bedrock.Entities.Components {
             return ToJObject();
         }
 
-        public static implicit operator JObject(InteractOnInteract ioi) {
+        public static implicit operator JObject(InteractEvent ioi) {
             return ioi?.ToJObject();
         }
 
-        public static implicit operator JToken(InteractOnInteract ioi) {
+        public static implicit operator JToken(InteractEvent ioi) {
             return ioi?.ToJToken();
         }
     }

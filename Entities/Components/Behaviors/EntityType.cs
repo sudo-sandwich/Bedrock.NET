@@ -6,7 +6,7 @@ using System.Collections.Generic;
 using System.Text;
 
 namespace Bedrock.Entities.Components.Behaviors {
-    public class EntityTypes {
+    public class EntityType : IJToken {
         public Filter Filter { get; set; }
         public double? MaxDist { get; set; }
         public double? WalkSpeedMultiplier { get; set; }
@@ -14,12 +14,8 @@ namespace Bedrock.Entities.Components.Behaviors {
         public bool? MustSee { get; set; }
         public double? MustSeeForgetDuration { get; set; }
 
-        public EntityTypes(Filter filter) {
+        public EntityType(Filter filter) {
             Filter = filter;
-        }
-
-        public static explicit operator JObject(EntityTypes entityTypes) {
-            return entityTypes?.ToJObject();
         }
 
         public JObject ToJObject() {
@@ -33,6 +29,18 @@ namespace Bedrock.Entities.Components.Behaviors {
             jObject.AddIfNotNull("must_see_forget_duration", MustSeeForgetDuration);
 
             return jObject;
+        }
+
+        public JToken ToJToken() {
+            return ToJObject();
+        }
+
+        public static implicit operator JObject(EntityType et) {
+            return et?.ToJObject();
+        }
+
+        public static implicit operator JToken(EntityType et) {
+            return et?.ToJToken();
         }
     }
 }

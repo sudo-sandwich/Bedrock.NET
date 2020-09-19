@@ -13,7 +13,7 @@ namespace Bedrock.Entities.Components.Behaviors {
         }
 
         public int Priority { get; set; }
-        public EntityTypes[] EntityTypes { get; set; }
+        public IList<EntityType> EntityTypes { get; set; } = new List<EntityType>();
         public double? WithinRadius { get; set; }
         public int? AttackInterval { get; set; }
         public bool? MustSee { get; set; }
@@ -24,8 +24,8 @@ namespace Bedrock.Entities.Components.Behaviors {
         public double? TargetSearchHeight { get; set; }
         public double? PersistTime { get; set; }
 
-        public BehaviorNearestAttackableTarget(params EntityTypes[] entityTypes) {
-            EntityTypes = entityTypes;
+        public BehaviorNearestAttackableTarget(params EntityType[] entityTypes) {
+            EntityTypes.AddRange(entityTypes);
         }
 
         public JProperty Generate() {
@@ -33,7 +33,7 @@ namespace Bedrock.Entities.Components.Behaviors {
                 { "priority", Priority }
             };
 
-            if (EntityTypes != null && EntityTypes.Length > 0) jObject.Add("entity_types", JArray.FromObject(Array.ConvertAll(EntityTypes, item => (JObject)item)));
+            if (EntityTypes != null && EntityTypes.Count > 0) jObject.Add("entity_types", EntityTypes.ToJArray());
             jObject.AddIfNotNull("within_radius", WithinRadius);
             jObject.AddIfNotNull("attack_interval", AttackInterval);
             jObject.AddIfNotNull("must_see", MustSee);

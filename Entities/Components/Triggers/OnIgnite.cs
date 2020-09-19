@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 
 namespace Bedrock.Entities.Components.Triggers {
-    class OnIgnite : TriggerBase {
+    public class OnIgnite : TriggerBase {
         public override string Name {
             get {
                 return "minecraft:on_ignite";

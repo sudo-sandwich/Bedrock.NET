@@ -11,7 +11,7 @@ namespace Bedrock.Entities.Components {
         public double? CooldownAfterBeingAttacked { get; set; }
         public int? HurtItem { get; set; }
         public string InteractText { get; set; }
-        public InteractOnInteract OnInteract { get; set; }
+        public InteractEvent OnInteract { get; set; }
         public InteractParticle ParticleOnStart { get; set; }
         public string PlaySounds { get; set; }
         public string SpawnEntities { get; set; }
