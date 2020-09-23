@@ -14,7 +14,7 @@ namespace Bedrock.Entities {
         public string Identifier { get; set; }
         public string RuntimeIdentifier { get; set; }
 
-        public string FormatVersion { get; set; } = "1.13.0";
+        public string FormatVersion { get; set; } = "1.16.1";
         public bool IsSpawnable { get; set; } = true;
         public bool IsSummonable { get; set; } = true;
         public bool? IsExperimental { get; set; }

@@ -101,6 +101,8 @@ namespace Bedrock.Functions.Commands {
         public double? Y { get; set; }
         public double? Z { get; set; }
 
+        public string RawValue { get; set; }
+
         public TargetSelector(Target target) {
             Target = target;
         }
@@ -124,40 +126,44 @@ namespace Bedrock.Functions.Commands {
         }
 
         public override string ToString() {
-            IList<string> arguments = new List<string>();
-            if (Count != null) arguments.Add("c = " + Count);
-            if (DeltaX != null) arguments.Add("dx = " + DeltaX);
-            if (DeltaY != null) arguments.Add("dy = " + DeltaY);
-            if (DeltaZ != null) arguments.Add("dz = " + DeltaZ);
-            if (MaxLevel != null) arguments.Add("l = " + MaxLevel);
-            if (MinLevel != null) arguments.Add("lm = " + MinLevel);
-            if (GameMode != null) arguments.Add("m = " + GameMode);
-            if (Name != null) arguments.Add("name = " + Name);
-            if (MaxRadius != null) arguments.Add("r = " + MaxRadius);
-            if (MinRadius != null) arguments.Add("rm = " + MinRadius);
-            if (MaxRotX != null) arguments.Add("rx = " + MaxRotX);
-            if (MinRotX != null) arguments.Add("rxm = " + MinRotX);
-            if (MaxRotY != null) arguments.Add("ry = " + MaxRotY);
-            if (MinRotY != null) arguments.Add("rym = " + MinRotY);
-            if (TypeString != null) arguments.Add("type = " + TypeString);
-            if (X != null) arguments.Add("x = " + X);
-            if (Y != null) arguments.Add("y = " + Y);
-            if (Z != null) arguments.Add("z = " + Z);
+            if (Target != Target.Raw) {
+                IList<string> arguments = new List<string>();
+                if (Count != null) arguments.Add("c = " + Count);
+                if (DeltaX != null) arguments.Add("dx = " + DeltaX);
+                if (DeltaY != null) arguments.Add("dy = " + DeltaY);
+                if (DeltaZ != null) arguments.Add("dz = " + DeltaZ);
+                if (MaxLevel != null) arguments.Add("l = " + MaxLevel);
+                if (MinLevel != null) arguments.Add("lm = " + MinLevel);
+                if (GameMode != null) arguments.Add("m = " + GameMode);
+                if (Name != null) arguments.Add("name = " + Name);
+                if (MaxRadius != null) arguments.Add("r = " + MaxRadius);
+                if (MinRadius != null) arguments.Add("rm = " + MinRadius);
+                if (MaxRotX != null) arguments.Add("rx = " + MaxRotX);
+                if (MinRotX != null) arguments.Add("rxm = " + MinRotX);
+                if (MaxRotY != null) arguments.Add("ry = " + MaxRotY);
+                if (MinRotY != null) arguments.Add("rym = " + MinRotY);
+                if (TypeString != null) arguments.Add("type = " + TypeString);
+                if (X != null) arguments.Add("x = " + X);
+                if (Y != null) arguments.Add("y = " + Y);
+                if (Z != null) arguments.Add("z = " + Z);
 
-            foreach (string tag in Tags) {
-                arguments.Add("tag = " + tag);
-            }
-
-            if (Scores.Count > 0) {
-                StringBuilder stringBuilder = new StringBuilder("scores = {");
-                foreach (ScoreSelector score in Scores) {
-                    stringBuilder.Append(score.ToString());
+                foreach (string tag in Tags) {
+                    arguments.Add("tag = " + tag);
                 }
-                stringBuilder.Append("}");
-                arguments.Add("scores = {" + string.Join(", ", Scores.Select(s => s.ToString())) + "}");
-            }
 
-            return Target.GetDescription() + (arguments.Count > 0 ? "[" + string.Join(", ", arguments) + "]" : "");
+                if (Scores.Count > 0) {
+                    StringBuilder stringBuilder = new StringBuilder("scores = {");
+                    foreach (ScoreSelector score in Scores) {
+                        stringBuilder.Append(score.ToString());
+                    }
+                    stringBuilder.Append("}");
+                    arguments.Add("scores = {" + string.Join(", ", Scores.Select(s => s.ToString())) + "}");
+                }
+
+                return Target.GetDescription() + (arguments.Count > 0 ? "[" + string.Join(", ", arguments) + "]" : "");
+            } else {
+                return RawValue;
+            }
         }
     }
 
@@ -171,6 +177,8 @@ namespace Bedrock.Functions.Commands {
         [Description("@r")]
         RandomPlayer,
         [Description("@s")]
-        Self
+        Self,
+        [Description("NO DESCRIPTION")]
+        Raw
     }
 }

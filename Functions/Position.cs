@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Bedrock.Functions {
     public struct Position : IEquatable<Position> {
-        public static readonly Position Self = new Position(Coordinate.Local, Coordinate.Local, Coordinate.Local); //"~ ~ ~"
+        public static readonly Position Self = new Position(Coordinate.Tilde, Coordinate.Tilde, Coordinate.Tilde); //"~ ~ ~"
 
         public Coordinate X { get; private set; }
         public Coordinate Y { get; private set; }
