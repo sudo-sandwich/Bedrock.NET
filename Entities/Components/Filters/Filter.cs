@@ -6,7 +6,7 @@ using System.ComponentModel;
 using System.Text;
 
 namespace Bedrock.Entities.Components.Filters {
-    public class Filter {
+    public class Filter : IJToken {
         public FilterTest[] Tests { get; set; }
         public Group GroupType { get; set; }
 
@@ -15,11 +15,23 @@ namespace Bedrock.Entities.Components.Filters {
             Tests = tests;
         }
 
+        public static implicit operator JToken(Filter filter) {
+            return filter?.ToJToken();
+        }
+
+        public static implicit operator JObject(Filter filter) {
+            return filter?.ToJObject();
+        }
+
         public static implicit operator JProperty(Filter filter) {
             return filter?.ToJProperty();
         }
 
-        public JProperty ToJProperty() {
+        public JToken ToJToken() {
+            return ToJObject();
+        }
+
+        public JObject ToJObject() {
             JObject jObject = new JObject();
 
             JArray filters = new JArray();
@@ -29,7 +41,11 @@ namespace Bedrock.Entities.Components.Filters {
                 filters.Add(test.ToJObject());
             }
 
-            return new JProperty("filters", jObject);
+            return jObject;
+        }
+
+        public JProperty ToJProperty() {
+            return new JProperty("filters", ToJObject());
         }
     }
 
