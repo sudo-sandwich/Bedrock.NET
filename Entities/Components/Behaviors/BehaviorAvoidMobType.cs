@@ -13,7 +13,7 @@ namespace Bedrock.Entities.Components.Behaviors {
         }
 
         public int Priority { get; set; }
-        public EntityType[] EntityTypes { get; set; }
+        public IList<EntityType> EntityTypes { get; set; } = new List<EntityType>();
         public double? MaxDist { get; set; }
         public double? MaxFlee { get; set; }
         public double? WalkSpeedMultiplier { get; set; }
@@ -30,7 +30,9 @@ namespace Bedrock.Entities.Components.Behaviors {
                 { "priority", Priority }
             };
 
-            if (EntityTypes != null && EntityTypes.Length > 0) jObject.Add("entity_types", JArray.FromObject(Array.ConvertAll(EntityTypes, item => (JObject)item)));
+            if (EntityTypes.Count > 0) {
+                jObject.Add("entity_types", EntityTypes.ToJArray());
+            }
             jObject.AddIfNotNull("max_dist", MaxDist);
             jObject.AddIfNotNull("max_flee", MaxFlee);
             jObject.AddIfNotNull("walk_speed_multiplier", WalkSpeedMultiplier);

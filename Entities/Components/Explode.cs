@@ -13,6 +13,7 @@ namespace Bedrock.Entities.Components {
         }
 
         public double? FuseLength { get; set; }
+        public Range<double> FuseLengthRange { get; set; }
         public double? Power { get; set; }
         public double? MaxResistance { get; set; }
         public bool? FuseLit { get; set; }
@@ -26,6 +27,7 @@ namespace Bedrock.Entities.Components {
             JObject jObject = new JObject();
 
             jObject.AddIfNotNull("fuse_length", FuseLength);
+            jObject.AddIfNotNull("fuse_length", FuseLengthRange); // this line will throw an exception is FuseLength is also defined, should only ever define one of the two
             jObject.AddIfNotNull("power", Power);
             jObject.AddIfNotNull("max_resistance", MaxResistance);
             jObject.AddIfNotNull("fuse_lit", FuseLit);
