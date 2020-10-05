@@ -1,5 +1,6 @@
 ﻿using Bedrock.Entities.Animations;
 using Bedrock.Entities.Components;
+using Bedrock.Utility;
 using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
@@ -17,6 +18,7 @@ namespace Bedrock.Entities {
         }
         public IList<ComponentGroup> ComponentsToAdd { get; set; } = new List<ComponentGroup>();
         public IList<ComponentGroup> ComponentsToRemove { get; set; } = new List<ComponentGroup>();
+        public IList<RandomGroup> Randomize { get; set; } = new List<RandomGroup>();
 
         public EntityEvent(string name) {
             Name = name;
@@ -63,6 +65,9 @@ namespace Bedrock.Entities {
                 foreach (ComponentGroup componentGroup in ComponentsToRemove) {
                     componentGroups.Add(componentGroup.Name);
                 }
+            }
+            if (Randomize.Count > 0) {
+                jObject.Add("randomize", Randomize.ToJArray());
             }
 
             return new JProperty(Name, jObject);

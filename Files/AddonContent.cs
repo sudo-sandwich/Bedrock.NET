@@ -208,6 +208,8 @@ namespace Bedrock.Files {
                     }
                 }
             }
+
+            Console.ResetColor();
         }
 
         private static void WriteFunction(string path, MCFunction function) {

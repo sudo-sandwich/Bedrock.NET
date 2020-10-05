@@ -7,11 +7,11 @@ using System.Text;
 namespace Bedrock.Entities.Components {
     public class SpellEffectsAdd : IJToken {
         public string Effect { get; set; }
-        public int Duration { get; set; }
-        public int Amplifier { get; set; }
-        public bool Visible { get; set; }
-        public bool Ambient { get; set; }
-        public bool DisplayOnScreenAnimations { get; set; }
+        public double? Duration { get; set; }
+        public double? Amplifier { get; set; }
+        public bool? Visible { get; set; }
+        public bool? Ambient { get; set; }
+        public bool? DisplayOnScreenAnimation { get; set; }
 
         public JObject ToJObject() {
             JObject jObject = new JObject();
@@ -21,7 +21,7 @@ namespace Bedrock.Entities.Components {
             jObject.AddIfNotNull("amplifier", Amplifier);
             jObject.AddIfNotNull("visible", Visible);
             jObject.AddIfNotNull("ambient", Ambient);
-            jObject.AddIfNotNull("display_on_screen_animations", DisplayOnScreenAnimations);
+            jObject.AddIfNotNull("display_on_screen_animation", DisplayOnScreenAnimation);
 
             return jObject;
         }

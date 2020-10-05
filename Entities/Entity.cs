@@ -28,6 +28,8 @@ namespace Bedrock.Entities {
 
         public IList<IAnimateScript> BehaviorPackAnimations { get; } = new List<IAnimateScript>();
         public IList<IAnimateScript> ResourcePackAnimations { get; } = new List<IAnimateScript>();
+        public IList<string> BehaviorInitializeScripts { get; } = new List<string>();
+        public IList<string> ResourceInitializeScripts { get; } = new List<string>();
         public IList<string> BehaviorPreAnimationScripts { get; } = new List<string>();
         public IList<string> ResourcePreAnimationScripts { get; } = new List<string>();
 
@@ -172,6 +174,10 @@ namespace Bedrock.Entities {
 
                 JObject scripts = new JObject();
                 description.Add(new JProperty("scripts", scripts));
+
+                if (BehaviorInitializeScripts.Count > 0) scripts.Add("initialize", new JArray(BehaviorInitializeScripts));
+                if (BehaviorPreAnimationScripts.Count > 0) scripts.Add("pre_animation", new JArray(BehaviorPreAnimationScripts));
+
                 JArray animate = new JArray();
                 scripts.Add("animate", animate);
 
@@ -270,6 +276,7 @@ namespace Bedrock.Entities {
                     animate.Add(animateScript.GenerateScript());
                 }
 
+                if (ResourceInitializeScripts.Count > 0) scripts.Add("initialize", new JArray(ResourceInitializeScripts));
                 if (ResourcePreAnimationScripts.Count > 0) scripts.Add("pre_animation", new JArray(ResourcePreAnimationScripts));
 
                 foreach (IAnimation animation in animationSet) {
