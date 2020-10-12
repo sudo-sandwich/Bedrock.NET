@@ -5,6 +5,8 @@ using System.Text;
 
 namespace Bedrock.Functions.Commands {
     public class Effect : Command {
+        public const int MaxDuration = 751619276;
+
         public TargetSelector Target { get; private set; }
         public string EffectType { get; private set; }
         public int? Duration { get; private set; }
