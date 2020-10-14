@@ -7,5 +7,5 @@ This repo is a Visual Studio 2019 project. It is also missing a lot of features,
 #### Quick Start
 
 1. Create a new solution in Visual Studio
-2. Add this repo as a git submodule in the directory of the solution. (`git submodule add https://github.com/Mysis/Bedrock.NET.git path/to/place`)
+2. Add this repo as a git submodule in the directory of the solution. (`git submodule add https://github.com/sudo-sandwich/Bedrock.NET.git path/to/place`)
 3. Any new projects you create will need to add Bedrock.NET as a reference.
