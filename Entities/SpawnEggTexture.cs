@@ -23,5 +23,9 @@ namespace Bedrock.Entities {
 
             return jObject;
         }
+
+        public JToken ToJToken() {
+            return ToJObject();
+        }
     }
 }

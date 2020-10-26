@@ -47,16 +47,7 @@ namespace Bedrock.Functions {
             }
 
             public override string ToString() {
-                //this if statement is here just becuase of some legacy code in the area 51 project. should only use MCFunction.FunctionName
-                if (function.FunctionName != null) {
-                    return CommandHelper.Build("function", function.FunctionName);
-                } else {
-                    //remove this else block after Area 51 is complete
-                    if (function.Name.StartsWith("npc_dialogue_")) {
-                        return CommandHelper.Build("function", "dialogue/" + function.Name);
-                    }
-                    return CommandHelper.Build("function", function.Name);
-                }
+                return CommandHelper.Build("function", function.FunctionName);
             }
         }
     }

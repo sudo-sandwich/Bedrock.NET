@@ -9,11 +9,15 @@ namespace Bedrock.Entities.Components {
     public class Transformation : IComponent {
         public string Name => "minecraft:transformation";
 
+        public IList<string> ComponentsToAdd { get; set; } = new List<string>();
         public string Into { get; set; }
 
         public JProperty Generate() {
             JObject jObject = new JObject();
 
+            if (ComponentsToAdd.Count > 0) {
+                jObject.Add(new JProperty("add", new JObject() { { "component_groups", new JArray(ComponentsToAdd) } }));
+            }
             jObject.AddIfNotNull("into", Into);
 
             return new JProperty(Name, jObject);

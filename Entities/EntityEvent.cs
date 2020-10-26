@@ -5,6 +5,7 @@ using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -19,6 +20,9 @@ namespace Bedrock.Entities {
         public IList<ComponentGroup> ComponentsToAdd { get; set; } = new List<ComponentGroup>();
         public IList<ComponentGroup> ComponentsToRemove { get; set; } = new List<ComponentGroup>();
         public IList<RandomGroup> Randomize { get; set; } = new List<RandomGroup>();
+        public IList<SequenceGroup> Sequence { get; set; } = new List<SequenceGroup>();
+
+        public bool HasContent => ComponentsToAdd.Count > 0 || ComponentsToRemove.Count > 0 || Randomize.Count > 0 || Sequence.Count > 0;
 
         public EntityEvent(string name) {
             Name = name;
@@ -68,6 +72,9 @@ namespace Bedrock.Entities {
             }
             if (Randomize.Count > 0) {
                 jObject.Add("randomize", Randomize.ToJArray());
+            }
+            if (Sequence.Count > 0) {
+                jObject.Add("sequence", Sequence.ToJArray());
             }
 
             return new JProperty(Name, jObject);

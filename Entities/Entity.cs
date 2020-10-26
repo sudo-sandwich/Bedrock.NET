@@ -44,9 +44,6 @@ namespace Bedrock.Entities {
         public EntityEvent EntityTransformed { get; } = new EntityEvent("minecraft:entity_transformed");
         public EntityEvent OnPrime { get; } = new EntityEvent("minecraft:on_prime");
 
-        //DEPRECATED, use Entity(string prefix, string identifier) instead. THIS WILL BE REMOVED IN A FUTURE UPDATE
-        public Entity() { }
-
         public Entity(string prefix, string identifier) {
             Prefix = prefix;
             Identifier = identifier;
@@ -212,10 +209,10 @@ namespace Bedrock.Entities {
             }
 
             IList<EntityEvent> events = new List<EntityEvent>();
-            if (EntityBorn.ComponentsToAdd.Count > 0 || EntityBorn.ComponentsToRemove.Count > 0) events.Add(EntityBorn);
-            if (EntitySpawned.ComponentsToAdd.Count > 0 || EntitySpawned.ComponentsToRemove.Count > 0) events.Add(EntitySpawned);
-            if (EntityTransformed.ComponentsToAdd.Count > 0 || EntityTransformed.ComponentsToRemove.Count > 0) events.Add(EntityTransformed);
-            if (OnPrime.ComponentsToAdd.Count > 0 || OnPrime.ComponentsToRemove.Count > 0) events.Add(OnPrime);
+            if (EntityBorn.HasContent) events.Add(EntityBorn);
+            if (EntitySpawned.HasContent) events.Add(EntitySpawned);
+            if (EntityTransformed.HasContent) events.Add(EntityTransformed);
+            if (OnPrime.HasContent) events.Add(OnPrime);
             events.AddRange(Events);
 
             if (events.Count > 0) {
