@@ -8,7 +8,8 @@ namespace Bedrock.Functions.Commands {
     //command for "scoreboard players set|add|remove"
     public class ScoreboardPlayers : Command {
         public ScoreAction Action { get; private set; }
-        public TargetSelector Target { get; private set; } //set this to null for "*"
+        public TargetSelector Target { get; private set; } = null;
+        public string TargetString { get; private set; }
         public string Objective { get; private set; }
         public int Count { get; private set; }
 
@@ -19,8 +20,15 @@ namespace Bedrock.Functions.Commands {
             Count = count;
         }
 
+        public ScoreboardPlayers(ScoreAction action, string target, string objective, int count) {
+            Action = action;
+            TargetString = target;
+            Objective = objective;
+            Count = count;
+        }
+
         public override string ToString() {
-            return CommandHelper.Build("scoreboard", "players", Action.GetDescription(), Target != null ? Target.ToString() : "*", Objective, Count);
+            return CommandHelper.Build("scoreboard", "players", Action.GetDescription(), Target != null ? Target.ToString() : TargetString, Objective, Count);
         }
     }
 

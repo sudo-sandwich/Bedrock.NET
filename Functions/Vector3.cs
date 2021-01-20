@@ -22,7 +22,7 @@ namespace Bedrock.Functions {
         }
 
         public override string ToString() {
-            return string.Join(" ", X, Y, Z);
+            return $"{X} {Y} {Z}";
         }
 
         public Position ToPosition() {
@@ -43,6 +43,10 @@ namespace Bedrock.Functions {
 
         public Vector3 Multiply(double amount) {
             return new Vector3(X * amount, Y * amount, Z * amount);
+        }
+
+        public Vector3 Divide(double amount) {
+            return new Vector3(X / amount, Y / amount, Z / amount);
         }
 
         public override bool Equals(object obj) {
@@ -77,6 +81,10 @@ namespace Bedrock.Functions {
         }
         public static Vector3 operator *(Vector3 left, double amount) {
             return left.Multiply(amount);
+        }
+
+        public static Vector3 operator /(Vector3 left, double amount) {
+            return left.Divide(amount);
         }
 
         public static bool operator ==(Vector3 left, Vector3 right) {
