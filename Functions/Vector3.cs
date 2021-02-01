@@ -82,9 +82,15 @@ namespace Bedrock.Functions {
         public static Vector3 operator *(Vector3 left, double amount) {
             return left.Multiply(amount);
         }
+        public static Vector3 operator *(double amount, Vector3 right) {
+            return right.Multiply(amount);
+        }
 
         public static Vector3 operator /(Vector3 left, double amount) {
             return left.Divide(amount);
+        }
+        public static Vector3 operator /(double amount, Vector3 right) {
+            return right.Divide(amount);
         }
 
         public static bool operator ==(Vector3 left, Vector3 right) {
