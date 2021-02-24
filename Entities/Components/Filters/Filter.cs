@@ -53,6 +53,8 @@ namespace Bedrock.Entities.Components.Filters {
         [Description("all_of")]
         AllOf,
         [Description("any_of")]
-        AnyOf
+        AnyOf,
+        [Description("none_of")]
+        NoneOf
     }
 }

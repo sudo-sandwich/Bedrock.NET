@@ -15,7 +15,7 @@ namespace Bedrock.Entities.Components {
         public IList<DamageCondition> DamageConditions { get; set; } = new List<DamageCondition>();
 
         public HurtOnCondition(params DamageCondition[] damageConditions) {
-            DamageConditions = damageConditions;
+            DamageConditions = new List<DamageCondition>(damageConditions);
         }
 
         public JProperty Generate() {
