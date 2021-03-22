@@ -17,7 +17,7 @@ namespace Bedrock.Entities.Components.Behaviors {
         public Filter Filters { get; set; }
         public IList<EventToSend> Sequence { get; set; } = new List<EventToSend>();
 
-        public JToken Generate() {
+        public JToken ToJToken() {
             JObject jObject = new JObject();
 
             jObject.AddIfNotNull("min_activation_range", MinActivationRange);
