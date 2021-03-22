@@ -21,12 +21,12 @@ namespace Bedrock.Entities.Components.Behaviors {
             JObject jObject = new JObject();
 
             jObject.AddIfNotNull("min_activation_range", MinActivationRange);
-            jObject.AddIfNotNull("min_activation_range", MaxActivationRange);
-            jObject.AddIfNotNull("min_activation_range", CooldownTime);
-            jObject.AddIfNotNull("min_activation_range", CastDuration);
-            jObject.AddIfNotNull("min_activation_range", ParticleColor);
-            jObject.AddIfNotNull("min_activation_range", Weight);
-            jObject.AddIfNotNull("min_activation_range", StartSoundEvent);
+            jObject.AddIfNotNull("max_activation_range", MaxActivationRange);
+            jObject.AddIfNotNull("cooldown_time", CooldownTime);
+            jObject.AddIfNotNull("cast_duration", CastDuration);
+            jObject.AddIfNotNull("particle_color", ParticleColor);
+            jObject.AddIfNotNull("weight", Weight);
+            jObject.AddIfNotNull("start_sound_event", StartSoundEvent);
             jObject.AddIfNotNull(Filters);
             if (Sequence.Count > 0) jObject.Add("sequence", Sequence.ToJArray());
 
