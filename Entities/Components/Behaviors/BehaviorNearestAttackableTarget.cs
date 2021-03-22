@@ -24,10 +24,6 @@ namespace Bedrock.Entities.Components.Behaviors {
         public double? TargetSearchHeight { get; set; }
         public double? PersistTime { get; set; }
 
-        public BehaviorNearestAttackableTarget(params EntityType[] entityTypes) {
-            EntityTypes.AddRange(entityTypes);
-        }
-
         public JProperty Generate() {
             JObject jObject = new JObject() {
                 { "priority", Priority }
