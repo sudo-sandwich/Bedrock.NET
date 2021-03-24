@@ -8,10 +8,10 @@ using System.Text;
 namespace Bedrock.Entities.Components {
     public class EnvironmentTrigger : IJToken {
         public Filter Filters { get; set; }
-        public EntityEvent Event { get; set; }
+        public string Event { get; set; }
         public string Target { get; set; }
 
-        public EnvironmentTrigger(Filter filters, EntityEvent entityEvent, string target = null) {
+        public EnvironmentTrigger(Filter filters, string entityEvent, string target = null) {
             Filters = filters;
             Event = entityEvent;
             Target = target;
@@ -21,7 +21,7 @@ namespace Bedrock.Entities.Components {
             JObject jObject = new JObject();
 
             jObject.AddIfNotNull(Filters);
-            jObject.AddIfNotNull("event", Event?.Name);
+            jObject.AddIfNotNull("event", Event);
             jObject.AddIfNotNull("target", Target);
 
             return jObject;

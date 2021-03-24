@@ -9,7 +9,7 @@ namespace Bedrock.Entities.Components.Triggers {
     public abstract class TriggerBase : IComponent {
         public abstract string Name { get; }
 
-        public EntityEvent Event { get; set; }
+        public string Event { get; set; }
         public string Target { get; set; }
         public Filter Filter { get; set; }
 
@@ -17,7 +17,7 @@ namespace Bedrock.Entities.Components.Triggers {
             JObject jObject = new JObject();
 
             if (Filter != null) jObject.Add(Filter.ToJProperty());
-            jObject.AddIfNotNull("event", Event.Name);
+            jObject.AddIfNotNull("event", Event);
             jObject.AddIfNotNull("target", Target);
 
             return new JProperty(Name, jObject);
