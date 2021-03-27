@@ -21,6 +21,7 @@ namespace Bedrock.Functions.Commands {
         public int? DeltaX { get; set; }
         public int? DeltaY { get; set; }
         public int? DeltaZ { get; set; }
+        public IList<string> Families { get; set; } = new List<string>();
         public int? MinLevel { get; set; }
         public int? MaxLevel { get; set; }
         public Mode? GameMode { get; set; }
@@ -147,6 +148,9 @@ namespace Bedrock.Functions.Commands {
                 if (Y != null) arguments.Add("y = " + Y);
                 if (Z != null) arguments.Add("z = " + Z);
 
+                foreach (string family in Families) {
+                    arguments.Add("family = " + family);
+                }
                 foreach (string tag in Tags) {
                     arguments.Add("tag = " + tag);
                 }
