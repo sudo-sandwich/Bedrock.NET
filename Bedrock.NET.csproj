@@ -3,6 +3,7 @@
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
     <RootNamespace>Bedrock</RootNamespace>
+    <Configurations>Debug;Release;Dev</Configurations>
   </PropertyGroup>
 
   <ItemGroup>

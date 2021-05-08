@@ -11,6 +11,7 @@ namespace Bedrock.Entities.Components {
 
         public IList<string> ComponentsToAdd { get; set; } = new List<string>();
         public string Into { get; set; }
+        public bool? DropEquipment { get; set; }
 
         public JProperty Generate() {
             JObject jObject = new JObject();
@@ -18,6 +19,7 @@ namespace Bedrock.Entities.Components {
             if (ComponentsToAdd.Count > 0) {
                 jObject.Add(new JProperty("add", new JObject() { { "component_groups", new JArray(ComponentsToAdd) } }));
             }
+            jObject.AddIfNotNull("drop_equipment", DropEquipment);
             jObject.AddIfNotNull("into", Into);
 
             return new JProperty(Name, jObject);

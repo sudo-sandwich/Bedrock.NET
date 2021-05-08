@@ -8,18 +8,18 @@ namespace Bedrock.Functions.Commands {
     public class Summon : Command {
         public string EntityType { get; private set; }
         public Position? SpawnPos { get; private set; }
-        public EntityEvent SpawnEvent { get; private set; }
+        public string SpawnEvent { get; private set; }
         public string NameTag { get; private set; }
 
         private string output;
 
-        public Summon(string entityType, Position? spawnPos = null, EntityEvent spawnEvent = null, string nameTag = null) {
+        public Summon(string entityType, Position? spawnPos = null, string spawnEvent = null, string nameTag = null) {
             EntityType = entityType;
             SpawnPos = spawnPos;
             SpawnEvent = spawnEvent;
             NameTag = nameTag;
 
-            output = CommandHelper.Build("summon", EntityType, spawnPos, spawnEvent?.Name, NameTag);
+            output = CommandHelper.Build("summon", EntityType, spawnPos, spawnEvent, NameTag);
         }
 
         public Summon(string entityType, string nameTag, Position? spawnPos = null) {
@@ -30,13 +30,13 @@ namespace Bedrock.Functions.Commands {
             output = CommandHelper.Build("summon", EntityType, NameTag, SpawnPos);
         }
 
-        public Summon(Entity entityType, Position? spawnPos = null, EntityEvent spawnEvent = null, string nameTag = null) {
+        public Summon(Entity entityType, Position? spawnPos = null, string spawnEvent = null, string nameTag = null) {
             EntityType = entityType.FullIdentifier;
             SpawnPos = spawnPos;
             SpawnEvent = spawnEvent;
             NameTag = nameTag;
 
-            output = CommandHelper.Build("summon", EntityType, spawnPos, spawnEvent?.Name, NameTag);
+            output = CommandHelper.Build("summon", EntityType, spawnPos, spawnEvent, NameTag);
         }
 
         public Summon(Entity entityType, string nameTag, Position? spawnPos = null) {
