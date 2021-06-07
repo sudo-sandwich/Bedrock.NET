@@ -9,7 +9,7 @@ namespace Bedrock.Entities.Components {
     public class EntitySensor : IComponent {
         public string Name => "minecraft:entity_sensor";
 
-        public Filter Filters { get; set; }
+        public IFilter Filters { get; set; }
         public string Event { get; set; }
         public int? MaxCount { get; set; }
         public int? MinCount { get; set; }

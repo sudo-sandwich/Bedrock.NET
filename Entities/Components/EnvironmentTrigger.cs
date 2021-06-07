@@ -7,11 +7,11 @@ using System.Text;
 
 namespace Bedrock.Entities.Components {
     public class EnvironmentTrigger : IJToken {
-        public Filter Filters { get; set; }
+        public IFilter Filters { get; set; }
         public string Event { get; set; }
         public string Target { get; set; }
 
-        public EnvironmentTrigger(Filter filters, string entityEvent, string target = null) {
+        public EnvironmentTrigger(IFilter filters, string entityEvent, string target = null) {
             Filters = filters;
             Event = entityEvent;
             Target = target;

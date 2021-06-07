@@ -14,7 +14,7 @@ namespace Bedrock.Entities.Components.Behaviors {
         public string ParticleColor { get; set; }
         public int? Weight { get; set; }
         public string StartSoundEvent { get; set; }
-        public Filter Filters { get; set; }
+        public IFilter Filters { get; set; }
         public IList<EventToSend> Sequence { get; set; } = new List<EventToSend>();
 
         public JToken ToJToken() {

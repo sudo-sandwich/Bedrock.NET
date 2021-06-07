@@ -13,13 +13,13 @@ namespace Bedrock.Entities.Components {
             }
         }
 
-        public Filter Filter { get; set; }
+        public IFilter Filter { get; set; }
         public bool? RemoveChildEntities { get; set; }
 
         public JProperty Generate() {
             JObject jObject = new JObject();
 
-            jObject.AddIfNotNull(Filter);
+            jObject.AddIfNotNull(Filter.ToJProperty());
             jObject.AddIfNotNull("remove_child_entities", RemoveChildEntities);
 
             return new JProperty(Name, jObject);

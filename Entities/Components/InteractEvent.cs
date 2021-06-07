@@ -7,7 +7,7 @@ using System.Text;
 
 namespace Bedrock.Entities.Components {
     public class InteractEvent : IJToken {
-        public Filter Filters { get; set; }
+        public IFilter Filters { get; set; }
         public EntityEvent Event { get; set; }
         public string Target { get; set; }
 

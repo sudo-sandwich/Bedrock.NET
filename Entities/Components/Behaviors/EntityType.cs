@@ -7,14 +7,14 @@ using System.Text;
 
 namespace Bedrock.Entities.Components.Behaviors {
     public class EntityType : IJToken {
-        public Filter Filter { get; set; }
+        public IFilter Filter { get; set; }
         public double? MaxDist { get; set; }
         public double? WalkSpeedMultiplier { get; set; }
         public double? SprintSpeedMultiplier { get; set; }
         public bool? MustSee { get; set; }
         public double? MustSeeForgetDuration { get; set; }
 
-        public EntityType(Filter filter) {
+        public EntityType(IFilter filter) {
             Filter = filter;
         }
 

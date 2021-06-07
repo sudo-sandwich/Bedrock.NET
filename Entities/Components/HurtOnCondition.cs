@@ -1,4 +1,5 @@
-﻿using Newtonsoft.Json.Linq;
+﻿using Bedrock.Utility;
+using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -21,7 +22,7 @@ namespace Bedrock.Entities.Components {
         public JProperty Generate() {
             JObject jObject = new JObject();
 
-            if (DamageConditions != null && DamageConditions.Count > 0) jObject.Add("damage_conditions", JArray.FromObject(DamageConditions.Select(item => (JObject)item)));
+            if (DamageConditions != null && DamageConditions.Count > 0) jObject.Add("damage_conditions", DamageConditions.ToJArray());
 
             return new JProperty(Name, jObject);
         }

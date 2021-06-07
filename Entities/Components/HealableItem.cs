@@ -9,9 +9,9 @@ namespace Bedrock.Entities.Components {
     public class HealableItem : IJToken {
         public string Item { get; set; }
         public int? HealAmount { get; set; }
-        public Filter Filters { get; set; }
+        public IFilter Filters { get; set; }
 
-        public HealableItem(string item, int? healAmount = null, Filter filters = null) {
+        public HealableItem(string item, int? healAmount = null, IFilter filters = null) {
             Item = item;
             HealAmount = healAmount;
             Filters = filters;

@@ -17,8 +17,8 @@ namespace Bedrock.Entities.Components.Behaviors {
         public int? KnockbackRange { get; set; }
         public int? KnockbackStrength { get; set; }
         public EntityEvent OnRoarEnd { get; set; }
-        public Filter KnockbackFilters { get; set; }
-        public Filter DamageFilters { get; set; }
+        public IFilter KnockbackFilters { get; set; }
+        public IFilter DamageFilters { get; set; }
 
         public JProperty Generate() {
             JObject jObject = new JObject();

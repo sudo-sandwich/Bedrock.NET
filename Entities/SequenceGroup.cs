@@ -8,7 +8,7 @@ using System.Text;
 
 namespace Bedrock.Entities {
     public class SequenceGroup : IJToken {
-        public Filter Filters { get; set; }
+        public IFilter Filters { get; set; }
         public IList<SequenceGroup> Sequence { get; set; } = new List<SequenceGroup>();
         public IList<ComponentGroup> ComponentsToAdd { get; set; } = new List<ComponentGroup>();
         public IList<ComponentGroup> ComponentsToRemove { get; set; } = new List<ComponentGroup>();

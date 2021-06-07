@@ -13,14 +13,14 @@ namespace Bedrock.Entities.Components.Behaviors {
             }
         }
 
-        public Filter Filter { get; set; }
+        public IFilter Filter { get; set; }
 
         public override JProperty Generate() {
             JObject jObject = new JObject() {
                 { "priority", Priority }
             };
 
-            jObject.AddIfNotNull(Filter);
+            jObject.AddIfNotNull((JProperty)Filter);
             jObject.AddIfNotNull("look_distance", LookDistance);
             jObject.AddIfNotNull("probability", Probability);
             jObject.AddIfNotNull("look_time", LookTime);

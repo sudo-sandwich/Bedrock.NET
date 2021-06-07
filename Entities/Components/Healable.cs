@@ -15,7 +15,7 @@ namespace Bedrock.Entities.Components {
 
         public HealableItem[] Items { get; set; }
         public bool? ForceUse { get; set; }
-        public Filter Filters { get; set; }
+        public IFilter Filters { get; set; }
 
         public JProperty Generate() {
             JObject jObject = new JObject();

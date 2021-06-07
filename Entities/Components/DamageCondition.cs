@@ -7,11 +7,11 @@ using System.Text;
 
 namespace Bedrock.Entities.Components {
     public class DamageCondition : IJToken {
-        public Filter Filter { get; set; }
+        public IFilter Filter { get; set; }
         public string Cause { get; set; }
         public int? DamagePerTick { get; set; }
 
-        public DamageCondition(Filter filter = null, string cause = null, int? damagePerTick = null) {
+        public DamageCondition(IFilter filter = null, string cause = null, int? damagePerTick = null) {
             Filter = filter;
             Cause = cause;
             DamagePerTick = damagePerTick;
@@ -28,7 +28,7 @@ namespace Bedrock.Entities.Components {
         public JObject ToJObject() {
             JObject jObject = new JObject();
 
-            jObject.AddIfNotNull(Filter);
+            jObject.AddIfNotNull(Filter.ToJProperty());
             jObject.AddIfNotNull("cause", Cause);
             jObject.AddIfNotNull("damage_per_tick", DamagePerTick);
 

@@ -11,7 +11,7 @@ namespace Bedrock.Entities.Components.Triggers {
 
         public string Event { get; set; }
         public string Target { get; set; }
-        public Filter Filter { get; set; }
+        public IFilter Filter { get; set; }
 
         public JProperty Generate() {
             JObject jObject = new JObject();

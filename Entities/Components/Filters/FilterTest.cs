@@ -9,7 +9,7 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace Bedrock.Entities.Components.Filters {
-    public abstract class FilterTest {
+    public abstract class FilterTest : IFilter {
         public abstract string Name { get; }
         public Subject Subject { get; set; }
         public Test Test { get; set; }
@@ -36,6 +36,10 @@ namespace Bedrock.Entities.Components.Filters {
 
             return jObject;
         }
+
+        public JProperty ToJProperty() => new JProperty("filters", ToJObject());
+
+        public JToken ToJToken() => ToJObject();
     }
 
     public enum Subject {

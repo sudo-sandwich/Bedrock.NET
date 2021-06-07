@@ -1,4 +1,5 @@
-﻿using Newtonsoft.Json.Linq;
+﻿using Bedrock.Entities.Components.Filters;
+using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -20,6 +21,11 @@ namespace Bedrock.Utility {
         public static void AddIfNotNull(this JObject jObject, string name, IJToken content) {
             if (content != null) {
                 jObject?.Add(new JProperty(name, content.ToJToken()));
+            }
+        }
+        public static void AddIfNotNull(this JObject jObject, IFilter content) {
+            if (content != null) {
+                jObject?.Add(content.ToJProperty());
             }
         }
 
