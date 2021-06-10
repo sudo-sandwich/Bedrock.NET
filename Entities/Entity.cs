@@ -34,7 +34,7 @@ namespace Bedrock.Entities {
         public IList<string> ResourcePreAnimationScripts { get; } = new List<string>();
 
         public IList<ComponentGroup> ComponentGroups { get; } = new List<ComponentGroup>();
-        public ComponentGroup MainComponents { get; } = new ComponentGroup("components");
+        public ComponentGroup MainComponents { get; } = new ComponentGroup("components", new ConditionalBandwidthOptimization());
 
         public IList<EntityEvent> Events { get; } = new List<EntityEvent>();
 
