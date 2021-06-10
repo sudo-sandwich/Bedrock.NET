@@ -18,7 +18,6 @@ namespace Bedrock.Entities {
         public bool IsSpawnable { get; set; } = true;
         public bool IsSummonable { get; set; } = true;
         public bool? IsExperimental { get; set; }
-        public ConditionalBandwidthOptimization ConditionalBandwidthOptimization { get; set; } = new ConditionalBandwidthOptimization();
 
         public ISpawnEgg SpawnEgg { get; set; }
 
@@ -201,17 +200,8 @@ namespace Bedrock.Entities {
                 }
             }
 
-            JObject components = new JObject();
             if (MainComponents.Count > 0) {
-                foreach (IComponent component in MainComponents.Components) {
-                    components.Add(component.Generate());
-                }
-            }
-            if (ConditionalBandwidthOptimization != null) {
-                components.Add(ConditionalBandwidthOptimization.Generate());
-            }
-            if (components.Count > 0) {
-                minecraftEntity.Add(new JProperty("components", components));
+                minecraftEntity.Add(MainComponents.Generate());
             }
 
             IList<EntityEvent> events = new List<EntityEvent>();
