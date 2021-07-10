@@ -18,6 +18,10 @@ namespace Bedrock.Entities.Animations {
             BlendTransition = blendTransition;
         }
 
+        public void AddTransition(AnimationState transitionTo, string query) {
+            Transitions.Add(new AnimationStateTransition(transitionTo, query));
+        }
+
         public JProperty Generate() {
             JObject jObject = new JObject();
 

@@ -14,10 +14,6 @@ namespace Bedrock.Entities.Components.Behaviors {
         public bool? MustSee { get; set; }
         public double? MustSeeForgetDuration { get; set; }
 
-        public EntityType(IFilter filter) {
-            Filter = filter;
-        }
-
         public JObject ToJObject() {
             JObject jObject = new JObject();
 

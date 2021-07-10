@@ -21,7 +21,7 @@ namespace Bedrock.Entities {
         public ComponentGroup(string name, params IComponent[] components) {
             Name = name;
             Components = new Dictionary<Type, IComponent>();
-            //Add(components);
+            Add(components);
         }
 
         public JProperty Generate() {

@@ -14,6 +14,7 @@ namespace Bedrock.Entities.Components {
 
         public double? InsideRange { get; set; }
         public double? OutsideRange { get; set; }
+        public bool? MustSee { get; set; }
         public string OnInsideRangeEvent { get; set; }
         public string OnInsideRangeTarget { get; set; }
         public string OnOutsideRangeEvent { get; set; }
@@ -24,6 +25,7 @@ namespace Bedrock.Entities.Components {
 
             jObject.AddIfNotNull("inside_range", InsideRange);
             jObject.AddIfNotNull("outside_range", OutsideRange);
+            jObject.AddIfNotNull("must_see", MustSee);
 
             if (OnInsideRangeEvent != null) {
                 JObject insideRange = new JObject() {
