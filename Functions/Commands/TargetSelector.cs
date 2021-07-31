@@ -22,6 +22,7 @@ namespace Bedrock.Functions.Commands {
         public int? DeltaY { get; set; }
         public int? DeltaZ { get; set; }
         public IList<string> Families { get; set; } = new List<string>();
+        public IList<string> WithoutFamilies { get; set; } = new List<string>();
         public int? MinLevel { get; set; }
         public int? MaxLevel { get; set; }
         public Mode? GameMode { get; set; }
@@ -78,6 +79,7 @@ namespace Bedrock.Functions.Commands {
         }
         public IList<ScoreSelector> Scores { get; set; } = new List<ScoreSelector>();
         public IList<Tag> Tags { get; set; } = new List<Tag>();
+        public IList<Tag> WithoutTags { get; set; } = new List<Tag>();
         private Entity _type;
         public Entity Type {
             get {
@@ -98,6 +100,7 @@ namespace Bedrock.Functions.Commands {
                 _typeString = value;
             }
         }
+        public IList<string> WithoutTypes { get; set; } = new List<string>();
         public double? X { get; set; }
         public double? Y { get; set; }
         public double? Z { get; set; }
@@ -143,16 +146,26 @@ namespace Bedrock.Functions.Commands {
                 if (MinRotX != null) arguments.Add("rxm = " + MinRotX);
                 if (MaxRotY != null) arguments.Add("ry = " + MaxRotY);
                 if (MinRotY != null) arguments.Add("rym = " + MinRotY);
-                if (TypeString != null) arguments.Add("type = " + TypeString);
                 if (X != null) arguments.Add("x = " + X);
                 if (Y != null) arguments.Add("y = " + Y);
                 if (Z != null) arguments.Add("z = " + Z);
 
+                if (TypeString != null) arguments.Add("type = " + TypeString);
+                foreach (string type in WithoutTypes) {
+                    arguments.Add($"type = !{type}");
+                }
+
                 foreach (string family in Families) {
-                    arguments.Add("family = " + family);
+                    arguments.Add($"family = {family}");
+                }
+                foreach (string family in WithoutFamilies) {
+                    arguments.Add($"family = !{family}");
                 }
                 foreach (string tag in Tags) {
-                    arguments.Add("tag = " + tag);
+                    arguments.Add($"tag = {tag}");
+                }
+                foreach (string tag in WithoutTags) {
+                    arguments.Add($"tag = !{tag}");
                 }
 
                 if (Scores.Count > 0) {

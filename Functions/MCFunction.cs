@@ -21,8 +21,25 @@ namespace Bedrock.Functions {
             }
         }
 
-        public MCFunction(string name, params Command[] commands) {
+        public MCFunction(string name) {
             Name = name;
+        }
+
+        public MCFunction(string name, IEnumerable<Command> commands) : this(name) {
+            Commands.AddRange(commands);
+        }
+
+        public MCFunction(string name, params Command[] commands) : this(name, (IEnumerable<Command>)commands) { }
+
+        public void Add(Command command) {
+            Commands.Add(command);
+        }
+
+        public void AddRange(params Command[] commands) {
+            AddRange(commands);
+        }
+
+        public void AddRange(IEnumerable<Command> commands) {
             Commands.AddRange(commands);
         }
 

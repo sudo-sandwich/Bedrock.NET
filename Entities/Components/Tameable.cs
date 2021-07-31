@@ -13,15 +13,15 @@ namespace Bedrock.Entities.Components {
         }
 
         public double? Probability { get; set; }
-        public string[] TameItems { get; set; }
+        public IList<string> TameItems { get; set; } = new List<string>();
         public EntityEvent TameEvent { get; set; }
 
         public JProperty Generate() {
             JObject jObject = new JObject();
 
             jObject.AddIfNotNull("probability", Probability);
-            jObject.AddIfNotNull("tame_items", TameItems);
-            jObject.AddIfNotNull("tame_event", TameEvent.GetAttribute());
+            if (TameItems != null && TameItems.Count > 0) jObject.Add("tame_items", new JArray(TameItems));
+            jObject.AddIfNotNull("tame_event", TameEvent?.GetAttribute());
 
             return new JProperty(Name, jObject);
         }

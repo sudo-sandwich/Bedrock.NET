@@ -10,6 +10,8 @@ namespace Bedrock.Entities.Components {
 
         public JObject Content { get; set; }
 
+        public HardCodedComponent() { }
+
         public HardCodedComponent(string name, JObject content) {
             Name = name;
             Content = content;

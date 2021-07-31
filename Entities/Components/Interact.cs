@@ -10,10 +10,6 @@ namespace Bedrock.Entities.Components {
 
         public IList<Interaction> Interactions { get; set; } = new List<Interaction>();
 
-        public Interact(params Interaction[] interactions) {
-            Interactions.AddRange(interactions);
-        }
-
         public JProperty Generate() {
             JObject jObject = new JObject();
 

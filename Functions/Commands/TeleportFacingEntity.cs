@@ -4,21 +4,21 @@ using System.Collections.Generic;
 using System.Text;
 
 namespace Bedrock.Functions.Commands {
-    public class TeleportFacing : Command {
+    public class TeleportFacingEntity : Command {
         public TargetSelector Target { get; private set; }
         public Position Destination { get; private set; }
-        public Position LookAtPosition { get; private set; }
+        public TargetSelector EntityToFace { get; private set; }
         public bool? CheckForBlocks { get; private set; }
 
-        public TeleportFacing(TargetSelector target, Position destination, Position lookAtPosition, bool? checkForBlocks = null) {
+        public TeleportFacingEntity(TargetSelector target, Position destination, TargetSelector entityToFace, bool? checkForBlocks = null) {
             Target = target;
             Destination = destination;
-            LookAtPosition = lookAtPosition;
+            EntityToFace = entityToFace;
             CheckForBlocks = checkForBlocks;
         }
 
         public override string ToString() {
-            return CommandHelper.Build("teleport", Target, Destination, "facing", LookAtPosition, CheckForBlocks);
+            return CommandHelper.Build("teleport", Target, Destination, "facing", EntityToFace, CheckForBlocks);
         }
     }
 }
