@@ -1,10 +1,11 @@
-﻿using Newtonsoft.Json.Linq;
+﻿using Bedrock.Utility;
+using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
 using System.Text;
 
 namespace Bedrock.Entities.Animations {
-    public class AnimationBlend : IAnimateScript {
+    public class AnimationBlend : IJToken {
         public IAnimation Animation { get; set; }
         public string Expression { get; set; }
 
@@ -19,7 +20,7 @@ namespace Bedrock.Entities.Animations {
             Expression = expression;
         }
 
-        public JToken GenerateScript() {
+        public JToken ToJToken() {
             if (Expression == null) {
                 return Animation.ShortName;
             } else {

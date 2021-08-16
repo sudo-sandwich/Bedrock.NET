@@ -5,7 +5,7 @@ using System.Collections.Generic;
 using System.Text;
 
 namespace Bedrock.Files {
-    public class ItemKey : IJToken, IEquatable<ItemKey> {
+    public class ItemKey : IJObject, IEquatable<ItemKey> {
         public string Item { get; set; }
         public int? Data { get; set; }
 
@@ -24,9 +24,7 @@ namespace Bedrock.Files {
             return jObject;
         }
 
-        public JToken ToJToken() {
-            return ToJObject();
-        }
+        public JToken ToJToken() => ToJObject();
 
         //stolen from here: https://stackoverflow.com/questions/263400/what-is-the-best-algorithm-for-an-overridden-system-object-gethashcode/263416#263416
         public override int GetHashCode() {

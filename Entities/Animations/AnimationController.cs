@@ -1,33 +1,20 @@
-﻿using Bedrock.Utility;
+﻿using Bedrock.Entities.Client;
+using Bedrock.Files;
+using Bedrock.Utility;
 using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 
 namespace Bedrock.Entities.Animations {
     //TODO: modify animation controller to split between resource pack (client side) and behavior pack (server side) animation controllers, make this file an abstract class
-    public class AnimationController : IAnimation, IAnimateScript {
+    public class AnimationController : IAnimation {
         public string ShortName { get; set; }
         public string LongName { get; set; }
+        public AnimationControllerFile File { get; set; }
         public AnimationState InitialState { get; set; }
         public IList<AnimationState> States { get; } = new List<AnimationState>();
-
-        public ISet<IAnimation> Animations {
-            get {
-                ISet<IAnimation> animations = new HashSet<IAnimation>();
-                animations.Add(this);
-                foreach (AnimationState state in States) {
-                    foreach (AnimationBlend animationBlend in state.Animations) {
-                        animations.Add(animationBlend.Animation);
-                        AnimationController controller = animationBlend.Animation as AnimationController;
-                        if (controller != null) {
-                            animations.AddRange(controller.Animations);
-                        }
-                    }
-                }
-                return animations;
-            }
-        }
 
         public AnimationController(string shortName, string longName) {
             ShortName = shortName;

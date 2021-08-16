@@ -7,8 +7,8 @@ namespace Bedrock.Entities.Animations {
     public class AnimationState {
         public string Name { get; set; }
         public IList<AnimationBlend> Animations { get; } = new List<AnimationBlend>();
-        public IList<IEvent> OnEntry { get; } = new List<IEvent>();
-        public IList<IEvent> OnExit { get; } = new List<IEvent>();
+        public IList<IAnimationControllerEvent> OnEntry { get; } = new List<IAnimationControllerEvent>();
+        public IList<IAnimationControllerEvent> OnExit { get; } = new List<IAnimationControllerEvent>();
         public IList<ParticleEffect> ParticleEffects { get; } = new List<ParticleEffect>();
         public IList<AnimationStateTransition> Transitions { get; } = new List<AnimationStateTransition>();
         public double? BlendTransition { get; set; }
@@ -30,7 +30,7 @@ namespace Bedrock.Entities.Animations {
                 jObject.Add("animations", animations);
 
                 foreach (AnimationBlend animation in Animations) {
-                    animations.Add(animation.GenerateScript());
+                    animations.Add(animation.ToJToken());
                 }
             }
 
@@ -38,7 +38,7 @@ namespace Bedrock.Entities.Animations {
                 JArray onEntry = new JArray();
                 jObject.Add("on_entry", onEntry);
 
-                foreach (IEvent e in OnEntry) {
+                foreach (IAnimationControllerEvent e in OnEntry) {
                     onEntry.Add(e.AnimationEvent);
                 }
             }
@@ -47,7 +47,7 @@ namespace Bedrock.Entities.Animations {
                 JArray onExit = new JArray();
                 jObject.Add("on_exit", onExit);
 
-                foreach (IEvent e in OnExit) {
+                foreach (IAnimationControllerEvent e in OnExit) {
                     onExit.Add(e.AnimationEvent);
                 }
             }
@@ -57,7 +57,7 @@ namespace Bedrock.Entities.Animations {
                 jObject.Add("particle_effects", particleEffects);
 
                 foreach (ParticleEffect effect in ParticleEffects) {
-                    particleEffects.Add(effect.Expression);
+                    particleEffects.Add(effect.ToJToken());
                 }
             }
 

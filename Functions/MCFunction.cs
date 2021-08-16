@@ -8,7 +8,7 @@ using System.Linq;
 using System.Text;
 
 namespace Bedrock.Functions {
-    public class MCFunction : IEvent {
+    public class MCFunction : IAnimationControllerEvent, IAnimationTimelineEvent {
         public string Name { get; set; }
         public IList<Command> Commands { get; } = new List<Command>();
 

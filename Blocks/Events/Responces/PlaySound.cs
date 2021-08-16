@@ -1,4 +1,4 @@
-﻿using Bedrock.Entities.Components.Filters;
+﻿using Bedrock.Entities.Server.Components.Filters;
 using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;

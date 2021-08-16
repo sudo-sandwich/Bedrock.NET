@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Bedrock.Entities.Client;
+using System;
 using System.Collections.Generic;
 using System.Text;
 

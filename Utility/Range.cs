@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Text;
 
 namespace Bedrock.Utility {
-    public class Range<T> : IJToken where T : IComparable {
+    public class Range<T> : IJArray where T : IComparable {
         public T Min { get; private set; }
         public T Max { get; private set; }
 
@@ -16,20 +16,8 @@ namespace Bedrock.Utility {
             Max = max;
         }
 
-        public static implicit operator JArray(Range<T> range) {
-            return range?.ToJArray();
-        }
+        public JArray ToJArray() => new JArray(Min, Max);
 
-        public static implicit operator JToken(Range<T> range) {
-            return range?.ToJToken();
-        }
-
-        public JArray ToJArray() {
-            return new JArray(Min, Max);
-        }
-
-        public JToken ToJToken() {
-            return ToJArray();
-        }
+        public JToken ToJToken() => ToJArray();
     }
 }
