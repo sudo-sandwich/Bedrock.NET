@@ -7,15 +7,21 @@ namespace Bedrock.Files {
     public class AddonCatalogue<T> {
         public IDictionary<AddonCategory, ICollection<T>> Catalogue { get; private set; } = new Dictionary<AddonCategory, ICollection<T>>();
 
-        public void Add(AddonCategory category, params T[] newEntries) {
+        public void Add(AddonCategory category, IEnumerable<T> newEntries) {
             ICollection<T> categoryCollection = GetOrCreateCategory(category);
 
             categoryCollection.AddRange(newEntries);
         }
 
-        public void Add(params T[] newEntries) => Add(new AddonCategory(), newEntries);
+        public void Add(AddonCategory category, params T[] newEntries) => Add(category, (IEnumerable<T>)newEntries);
 
-        public void Add(string category, params T[] newEntries) => Add(new AddonCategory(category), newEntries);
+        public void Add(IEnumerable<T> newEntries) => Add(AddonCategory.None, newEntries);
+
+        public void Add(params T[] newEntries) => Add(AddonCategory.None, (IEnumerable<T>)newEntries);
+
+        public void Add(string category, IEnumerable<T> newEntries) => Add(new AddonCategory(category), newEntries);
+
+        public void Add(string category, params T[] newEntries) => Add(new AddonCategory(category), (IEnumerable<T>)newEntries);
 
         public ICollection<T> GetOrCreateCategory(AddonCategory category) {
             if (!Catalogue.ContainsKey(category)) {

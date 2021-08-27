@@ -7,6 +7,8 @@ using System.Text.RegularExpressions;
 
 namespace Bedrock.Files {
     public class AddonCategory {
+        public static readonly AddonCategory None = new AddonCategory();
+
         public IReadOnlyList<string> Categories { get; private set; }
         public int Count => Categories.Count;
         public string CategoryPath => Path.Combine(Categories.ToArray());

@@ -7,6 +7,12 @@ using System.Threading.Tasks;
 namespace Bedrock.Functions {
     public struct Position : IEquatable<Position> {
         public static readonly Position Self = new Position(Coordinate.Tilde, Coordinate.Tilde, Coordinate.Tilde); //"~ ~ ~"
+        public static readonly Position LocalOneX = new Position(new Coordinate(1, Offset.Tilde), Coordinate.Tilde, Coordinate.Tilde);
+        public static readonly Position LocalOneY = new Position(Coordinate.Tilde, new Coordinate(1, Offset.Tilde), Coordinate.Tilde);
+        public static readonly Position LocalOneZ = new Position(Coordinate.Tilde, Coordinate.Tilde, new Coordinate(1, Offset.Tilde));
+        public static readonly Position LocalNegativeOneX = new Position(new Coordinate(-1, Offset.Tilde), Coordinate.Tilde, Coordinate.Tilde);
+        public static readonly Position LocalNegativeOneY = new Position(Coordinate.Tilde, new Coordinate(-1, Offset.Tilde), Coordinate.Tilde);
+        public static readonly Position LocalNegativeOneZ = new Position(Coordinate.Tilde, Coordinate.Tilde, new Coordinate(-1, Offset.Tilde));
 
         public Coordinate X { get; private set; }
         public Coordinate Y { get; private set; }

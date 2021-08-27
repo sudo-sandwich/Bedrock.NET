@@ -6,8 +6,8 @@ using System.Text;
 
 namespace Bedrock.Functions {
     public struct Coordinate : IEquatable<Coordinate> {
-        public static readonly Coordinate Tilde = new Coordinate(0, Offset.World); //set Value to null to produce nothing but a tilde.
-        public static readonly Coordinate Carat = new Coordinate(0, Offset.Local);
+        public static readonly Coordinate Tilde = new Coordinate(0, Offset.Tilde);
+        public static readonly Coordinate Carat = new Coordinate(0, Offset.Carat);
 
         public double Value { get; private set; }
         public Offset Offset { get; private set; }
@@ -64,8 +64,8 @@ namespace Bedrock.Functions {
         [Description("")]
         None,
         [Description("~")]
-        World,
+        Tilde,
         [Description("^")]
-        Local
+        Carat
     }
 }

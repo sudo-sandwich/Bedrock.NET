@@ -1,4 +1,7 @@
 ﻿using Bedrock.Entities.Animations;
+using Bedrock.Entities.Server;
+using Bedrock.Entities.Server.Components;
+using Bedrock.Entities.Utility;
 using Bedrock.Utility;
 using Newtonsoft.Json.Linq;
 using System;
@@ -37,5 +40,23 @@ namespace Bedrock.Entities {
 
             return scripts;
         }
+
+        public static EventGroup CreateEventGroupSingle(this ServerEntity se, string eventName, string groupName, params IComponent[] components) {
+            ComponentGroup cg = se.CreateComponentGroup(groupName, components);
+            EntityEvent addEvent = se.CreateEvent(eventName, cg);
+            return new EventGroup(addEvent, null, cg);
+        }
+
+        public static EventGroup CreateEventGroupSingle(this ServerEntity se, string eventName, params IComponent[] components) => CreateEventGroupSingle(se, eventName, $"{eventName}_group", components);
+
+        public static EventGroup CreateEventGroupDouble(this ServerEntity se, string addEventName, string removeEventName, string groupName, params IComponent[] components) {
+            ComponentGroup cg = se.CreateComponentGroup(groupName, components);
+            EntityEvent add = se.CreateEvent(addEventName, cg);
+            EntityEvent remove = se.CreateEvent(removeEventName);
+            remove.ComponentsToRemove.Add(cg);
+            return new EventGroup(add, remove, cg);
+        }
+
+        public static EventGroup CreateEventGroupDouble(this ServerEntity se, string eventName, params IComponent[] components) => CreateEventGroupDouble(se, eventName, $"{eventName}_remove", $"{eventName}_group", components);
     }
 }
