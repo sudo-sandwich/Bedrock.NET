@@ -32,7 +32,7 @@ namespace Bedrock.Files {
             };
 
             JObject animations = new JObject();
-            jObject.Add(new JProperty("animations", animations));
+            jObject.Add(new JProperty("render_controllers", animations));
 
             foreach (RenderController animation in Controllers.Values) {
                 animations.Add(animation.Generate());

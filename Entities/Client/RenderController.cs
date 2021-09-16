@@ -13,10 +13,10 @@ namespace Bedrock.Entities.Client {
         public IDictionary<string, RCArray<Geometry>> GeometryArrays { get; } = new Dictionary<string, RCArray<Geometry>>();
         public IDictionary<string, RCArray<Material>> MaterialArrays { get; } = new Dictionary<string, RCArray<Material>>();
         public IDictionary<string, RCArray<Texture>> TextureArrays { get; } = new Dictionary<string, RCArray<Texture>>();
+        public IDictionary<string, string> Materials { get; } = new Dictionary<string, string>();
+        public IList<string> Textures { get; set; } = new List<string>();
 
         public string Geometry { get; set; }
-        public IList<(string bone, string material)> Materials { get; set; }
-        public IList<string> Textures { get; set; }
 
         public OverlayColorMolang OverlayColor { get; set; }
 
@@ -84,9 +84,11 @@ namespace Bedrock.Entities.Client {
             jObject.Add("geometry", Geometry);
             JArray materials = new JArray();
             jObject.Add("materials", materials);
-            foreach ((string bone, string material) in Materials) {
-                materials.Add(new JObject() { { bone, material } });
-            }
+
+            // new 
+            foreach (KeyValuePair<string, string> kvp in Materials)
+                materials.Add(new JObject() {{ kvp.Key, kvp.Value }});
+
             jObject.Add("textures", new JArray(Textures));
 
             jObject.AddIfNotNull("overlay_color", OverlayColor);
