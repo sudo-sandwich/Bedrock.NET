@@ -10,9 +10,9 @@ namespace Bedrock.Entities.Client {
         public string Name { get; set; }
         public RenderControllerFile File { get; set; }
 
-        public IDictionary<string, RCArray<Geometry>> GeometryArrays { get; }
-        public IDictionary<string, RCArray<Material>> MaterialArrays { get; }
-        public IDictionary<string, RCArray<Texture>> TextureArrays { get; }
+        public IDictionary<string, RCArray<Geometry>> GeometryArrays { get; } = new Dictionary<string, RCArray<Geometry>>();
+        public IDictionary<string, RCArray<Material>> MaterialArrays { get; } = new Dictionary<string, RCArray<Material>>();
+        public IDictionary<string, RCArray<Texture>> TextureArrays { get; } = new Dictionary<string, RCArray<Texture>>();
 
         public string Geometry { get; set; }
         public IList<(string bone, string material)> Materials { get; set; }
@@ -25,14 +25,23 @@ namespace Bedrock.Entities.Client {
         }
 
         public void AddGeometryArray(RCArray<Geometry> geometryArray) {
+            if (string.IsNullOrEmpty(geometryArray.Name))
+                throw new ArgumentNullException($"Geometry array name is invalid for Render controller {Name}");
+
             GeometryArrays.Add(geometryArray.Name, geometryArray);
         }
 
         public void AddMaterialArray(RCArray<Material> materialArray) {
+            if (string.IsNullOrEmpty(materialArray.Name))
+                throw new ArgumentNullException($"Material array name is invalid for Render controller {Name}");
+
             MaterialArrays.Add(materialArray.Name, materialArray);
         }
 
-        public void AddGeometryArray(RCArray<Texture> textureArray) {
+        public void AddTextureArray(RCArray<Texture> textureArray) {
+            if (string.IsNullOrEmpty(textureArray.Name))
+                throw new ArgumentNullException($"Texture array name is invalid for Render controller {Name}");
+
             TextureArrays.Add(textureArray.Name, textureArray);
         }
 
