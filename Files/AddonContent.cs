@@ -14,7 +14,6 @@ namespace Bedrock.Files {
         private StringBuilder StrBuilder = new StringBuilder();
         private JsonTextWriter JTextWriter;
 
-        //prefer to use Add() to add entities and functions but you can directly use the fields if you want. Add() is easier though.
         public AddonCatalogue<MCFunction> Functions { get; private set; } = new AddonCatalogue<MCFunction>();
         public AddonCatalogue<Entity> Entities { get; private set; } = new AddonCatalogue<Entity>();
         public AddonCatalogue<AnimationControllerFile> ServerAnimationControllers { get; private set; } = new AddonCatalogue<AnimationControllerFile>();
