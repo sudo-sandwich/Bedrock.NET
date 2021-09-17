@@ -24,26 +24,46 @@ namespace Bedrock.Entities.Client {
             Name = name;
         }
 
+        #pragma warning disable CA1307 // Specify StringComparison
         public void AddGeometryArray(RCArray<Geometry> geometryArray) {
+            if (geometryArray == null)
+                throw new ArgumentNullException($"GeometryArray cannot be null in RenderController {Name}");
+
             if (string.IsNullOrEmpty(geometryArray.Name))
                 throw new ArgumentNullException($"Geometry array name is invalid for Render controller {Name}");
+
+            if (!geometryArray.Name.StartsWith("Array."))
+                geometryArray.Name = geometryArray.Name.Insert(0, "Array.");
 
             GeometryArrays.Add(geometryArray.Name, geometryArray);
         }
 
         public void AddMaterialArray(RCArray<Material> materialArray) {
+            if (materialArray == null)
+                throw new ArgumentNullException($"MaterialArray cannot be null in RenderController {Name}");
+
             if (string.IsNullOrEmpty(materialArray.Name))
                 throw new ArgumentNullException($"Material array name is invalid for Render controller {Name}");
+
+            if (!materialArray.Name.StartsWith("Array."))
+                materialArray.Name = materialArray.Name.Insert(0, "Array.");
 
             MaterialArrays.Add(materialArray.Name, materialArray);
         }
 
         public void AddTextureArray(RCArray<Texture> textureArray) {
+            if (textureArray == null)
+                throw new ArgumentNullException($"TextureArray cannot be null in RenderController {Name}");
+
             if (string.IsNullOrEmpty(textureArray.Name))
                 throw new ArgumentNullException($"Texture array name is invalid for Render controller {Name}");
 
+            if (!textureArray.Name.StartsWith("Array."))
+                textureArray.Name = textureArray.Name.Insert(0, "Array.");
+
             TextureArrays.Add(textureArray.Name, textureArray);
         }
+        #pragma warning restore CA1307 // Specify StringComparison
 
         public JProperty Generate() {
             JObject jObject = new JObject();
