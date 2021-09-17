@@ -45,6 +45,7 @@ namespace Bedrock.Entities.Client {
         public RenderController CreateRenderController(string name) {
             RenderController rc = new RenderController(name);
             RenderControllerFile.Add(rc);
+            AddRenderController(rc);
             return rc;
         }
 
