@@ -23,6 +23,12 @@ namespace Bedrock.Files {
         public AddonCatalogue<AnimationTimelineFile> ClientAnimationTimelines { get; private set; } = new AddonCatalogue<AnimationTimelineFile>();
         public AddonCatalogue<RenderControllerFile> RenderControllers { get; private set; } = new AddonCatalogue<RenderControllerFile>();
 
+        // dict with key of int, with an object that contains lists of all of the object names for search later
+        // search, look over all of the entries, check each string for names, if a single one is found, return the entire lot
+
+        public List<AddonCache> Cache { get; } = new List<AddonCache>();
+        public bool Cached { get; set; } = false;
+
         public void AddContent(AddonContent content) {
             Functions.Merge(content.Functions);
             Entities.Merge(content.Entities);
@@ -31,6 +37,33 @@ namespace Bedrock.Files {
             ClientAnimationControllers.Merge(content.ClientAnimationControllers);
             ClientAnimationTimelines.Merge(content.ClientAnimationTimelines);
             RenderControllers.Merge(content.RenderControllers);
+            CacheAndMerge(content);
+        }
+
+        private void CacheAndMerge(AddonContent content)
+        {
+            if (content.Cached == false)
+            {
+                AddonCache ac = new AddonCache();
+                ac.AddonContent = content;
+
+                foreach (KeyValuePair<AddonCategory, ICollection<MCFunction>> kvp in content.Functions.Catalogue)
+                {
+                    HashSet<MCFunction> fc = (HashSet<MCFunction>)kvp.Value;
+                    foreach (MCFunction f in fc)
+                    {
+                        ac.Functions.Add(f.Name);
+                    }
+                }
+                Cache.Add(ac);
+                Cached = true; // we are adding this object to cache
+            }
+
+            if (content.Cache.Count > 0)
+            {
+                Cache.AddRange(content.Cache);
+                Cached = true;
+            }
         }
 
         public void WriteAll(string serverPackPath, string clientPackPath) => WriteAll(serverPackPath, clientPackPath, AddonWriteSettings.Default);
@@ -168,7 +201,7 @@ namespace Bedrock.Files {
                         if (entity.Client.RenderControllerFile.Controllers.Count > 0) {
                             Console.WriteLine("\t\tWriting render controllers...");
                             categoryDirectory = GetCategoryDirectory(category, renderControllers);
-                            WriteJson(Path.Combine(categoryDirectory.FullName, $"{entity.Identifier}{(settings.UseRenderControllerExtension ? settings.RenderControllerExtension : "")}.json"), entity.Server.AnimationTimelineFile.Generate(), settings.JsonHeader);
+                            WriteJson(Path.Combine(categoryDirectory.FullName, $"{entity.Identifier}{(settings.UseRenderControllerExtension ? settings.RenderControllerExtension : "")}.json"), entity.Client.RenderControllerFile.Generate(), settings.JsonHeader);
                         }
                     }
                 }
