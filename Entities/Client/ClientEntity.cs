@@ -45,6 +45,7 @@ namespace Bedrock.Entities.Client {
         public RenderController CreateRenderController(string name) {
             RenderController rc = new RenderController(name);
             RenderControllerFile.Add(rc);
+            AddRenderController(rc);
             return rc;
         }
 
@@ -58,6 +59,12 @@ namespace Bedrock.Entities.Client {
 
         public void AddGeometry(string shortName, string longName) => AddGeometry(new Geometry(shortName, longName));
 
+        public void AddGeometryArray(RCArray<Geometry> geometries) {
+            foreach (Geometry geometry in geometries.Entries) {
+                AddGeometry(geometry);
+            }
+        }
+
         public void AddMaterial(Material material) {
             if (Materials.ContainsKey(material.ShortName)) {
                 throw new ArgumentException($"Material with short name {material.ShortName} already exists on this entity.");
@@ -68,6 +75,12 @@ namespace Bedrock.Entities.Client {
 
         public void AddMaterial(string shortName, string longName) => AddMaterial(new Material(shortName, longName));
 
+        public void AddMaterialArray(RCArray<Material> materials) {
+            foreach (Material material in materials.Entries) {
+                AddMaterial(material);
+            }
+        }
+
         public void AddTexture(Texture texture) {
             if (Textures.ContainsKey(texture.ShortName)) {
                 throw new ArgumentException($"Geometry with short name {texture.ShortName} already exists on this entity.");
@@ -77,6 +90,12 @@ namespace Bedrock.Entities.Client {
         }
 
         public void AddTexture(string shortName, string longName) => AddTexture(new Texture(shortName, longName));
+
+        public void AddTextureArray(RCArray<Texture> textures) {
+            foreach (Texture texture in textures.Entries) {
+                AddTexture(texture);
+            }
+        }
 
         public void AddRenderController(IRenderController renderController, string molang = null) {
             RenderControllers.Add(renderController, molang);

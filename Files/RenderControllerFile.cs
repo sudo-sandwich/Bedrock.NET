@@ -31,11 +31,11 @@ namespace Bedrock.Files {
                 { "format_version", "1.8.0" }
             };
 
-            JObject animations = new JObject();
-            jObject.Add(new JProperty("animations", animations));
+            JObject renderControllers = new JObject();
+            jObject.Add(new JProperty("render_controllers", renderControllers));
 
             foreach (RenderController animation in Controllers.Values) {
-                animations.Add(animation.Generate());
+                renderControllers.Add(animation.Generate());
             }
 
             return jObject;

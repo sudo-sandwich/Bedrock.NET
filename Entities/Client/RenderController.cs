@@ -10,13 +10,13 @@ namespace Bedrock.Entities.Client {
         public string Name { get; set; }
         public RenderControllerFile File { get; set; }
 
-        public IDictionary<string, RCArray<Geometry>> GeometryArrays { get; }
-        public IDictionary<string, RCArray<Material>> MaterialArrays { get; }
-        public IDictionary<string, RCArray<Texture>> TextureArrays { get; }
+        public IDictionary<string, RCArray<Geometry>> GeometryArrays { get; } = new Dictionary<string, RCArray<Geometry>>();
+        public IDictionary<string, RCArray<Material>> MaterialArrays { get; } = new Dictionary<string, RCArray<Material>>();
+        public IDictionary<string, RCArray<Texture>> TextureArrays { get; } = new Dictionary<string, RCArray<Texture>>();
 
         public string Geometry { get; set; }
-        public IList<(string bone, string material)> Materials { get; set; }
-        public IList<string> Textures { get; set; }
+        public IDictionary<string, string> Materials { get; } = new Dictionary<string, string>();
+        public IList<string> Textures { get; set; } = new List<string>();
 
         public OverlayColorMolang OverlayColor { get; set; }
 
@@ -32,7 +32,7 @@ namespace Bedrock.Entities.Client {
             MaterialArrays.Add(materialArray.Name, materialArray);
         }
 
-        public void AddGeometryArray(RCArray<Texture> textureArray) {
+        public void AddTextureArray(RCArray<Texture> textureArray) {
             TextureArrays.Add(textureArray.Name, textureArray);
         }
 

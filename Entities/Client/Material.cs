@@ -6,7 +6,7 @@ using System.Text;
 
 namespace Bedrock.Entities.Client {
     public class Material : ClientAsset {
-        public override string ArrayEntry => $"material.{ShortName}";
+        public override string ArrayEntry => $"Material.{ShortName}";
         public Material(string shortName, string longName) : base(shortName, longName) { }
     }
 }

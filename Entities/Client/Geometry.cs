@@ -6,7 +6,7 @@ using System.Text;
 
 namespace Bedrock.Entities.Client {
     public class Geometry : ClientAsset {
-        public override string ArrayEntry => $"geometry.{ShortName}";
+        public override string ArrayEntry => $"Geometry.{ShortName}";
         public Geometry(string shortName, string longName) : base(shortName, longName) { }
     }
 }

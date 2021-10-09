@@ -167,7 +167,7 @@ namespace Bedrock.Files {
                         if (entity.Client.RenderControllerFile.Controllers.Count > 0) {
                             Console.WriteLine("\t\tWriting render controllers...");
                             categoryDirectory = GetCategoryDirectory(category, renderControllers);
-                            WriteJson(Path.Combine(categoryDirectory.FullName, $"{entity.Identifier}{(settings.UseRenderControllerExtension ? settings.RenderControllerExtension : "")}.json"), entity.Server.AnimationTimelineFile.Generate(), settings.JsonHeader);
+                            WriteJson(Path.Combine(categoryDirectory.FullName, $"{entity.Identifier}{(settings.UseRenderControllerExtension ? settings.RenderControllerExtension : "")}.json"), entity.Client.RenderControllerFile.Generate(), settings.JsonHeader);
                         }
                     }
                 }

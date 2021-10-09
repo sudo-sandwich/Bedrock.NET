@@ -8,7 +8,7 @@ using System.Text;
 namespace Bedrock.Entities.Client {
     public class RCArray<T> : IJProperty where T : ClientAsset {
         public string Name { get; set; }
-        IList<T> Entries { get; set; }
+        public IList<T> Entries { get; set; }
 
         public RCArray(string name) {
             Name = name;
@@ -26,6 +26,8 @@ namespace Bedrock.Entities.Client {
         }
 
         public void Add(T asset) => Entries.Add(asset);
+
+        public string Query(string entry) => $"{Name}[{entry}]";
 
         public JProperty ToJProperty() => new JProperty(Name, new JArray(Entries.Select(e => e.ArrayEntry)));
         public JToken ToJToken() => ToJProperty();
