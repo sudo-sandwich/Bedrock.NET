@@ -27,7 +27,7 @@ namespace Bedrock.Entities.Server.Components.Filters {
                 { "operator", Test.GetDescription() }
             };
 
-            jObject.Add("value", (JToken)Value);
+            jObject.Add("value", Value);
 
             return jObject;
         }

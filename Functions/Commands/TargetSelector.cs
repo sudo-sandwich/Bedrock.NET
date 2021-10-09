@@ -104,6 +104,26 @@ namespace Bedrock.Functions.Commands {
         public double? X { get; set; }
         public double? Y { get; set; }
         public double? Z { get; set; }
+        public Vector3 XYZ {
+            get {
+                return new Vector3(X ?? 0, Y ?? 0, Z ?? 0);
+            }
+            set {
+                X = value.X;
+                Y = value.Y;
+                Z = value.Z;
+            }
+        }
+        public Vector3 DeltaXYZ {
+            get {
+                return new Vector3(DeltaX ?? 0, DeltaY ?? 0, DeltaZ ?? 0);
+            }
+            set {
+                DeltaX = (int)value.X;
+                DeltaY = (int)value.Y;
+                DeltaZ = (int)value.Z;
+            }
+        }
 
         public string RawValue { get; set; }
 

@@ -1,4 +1,5 @@
 ﻿using Bedrock.Entities.Animations;
+using Bedrock.Entities.Server.Components.Filters;
 using Bedrock.Utility;
 using Newtonsoft.Json.Linq;
 using System;
@@ -20,6 +21,7 @@ namespace Bedrock.Entities.Server {
         public IList<ComponentGroup> ComponentsToRemove { get; set; } = new List<ComponentGroup>();
         public IList<RandomGroup> Randomize { get; set; } = new List<RandomGroup>();
         public IList<SequenceGroup> Sequence { get; set; } = new List<SequenceGroup>();
+        public IFilter Filters { get; set; }
 
         public bool HasContent => ComponentsToAdd.Count > 0 || ComponentsToRemove.Count > 0 || Randomize.Count > 0 || Sequence.Count > 0;
 
@@ -48,6 +50,8 @@ namespace Bedrock.Entities.Server {
 
         public JProperty Generate() {
             JObject jObject = new JObject();
+
+            jObject.AddIfNotNull("filters", Filters?.ToJObject());
 
             if (ComponentsToAdd.Count > 0) {
                 JObject add = new JObject();

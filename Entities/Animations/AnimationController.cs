@@ -27,6 +27,11 @@ namespace Bedrock.Entities.Animations {
             return animationState;
         }
 
+        public AnimationState CreateInitialState(string name, double? blendTransition = null) {
+            InitialState = CreateState(name, blendTransition);
+            return InitialState;
+        }
+
         public JToken GenerateScript() {
             return ShortName;
         }
