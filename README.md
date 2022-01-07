@@ -66,7 +66,7 @@ removeRaidTrigger.ComponentsToRemove.Add(raidTrigger);
 // Add main components.
 player.Server.MainComponents.Add(
 	new ExperienceReward() { OnDeath = "Math.Min(query.player_level * 7, 100)" },
-	new TypeFamily() { Families = { "player", Constants.ApplyEffectFamily } },
+	new TypeFamily() { Families = { "player" } },
 	new IsHiddenWhenInvisible(),
 	new Loot() { Table = "loot_tables/empty.json" },
 	new CollisionBox() { Width = 0.6, Height = 1.8 },
