@@ -7,13 +7,14 @@ using System.Text;
 namespace Bedrock.Functions.Commands {
     public class GameMode : Command {
         public Mode Mode { get; private set; }
-
-        public GameMode(Mode mode) {
+        public TargetSelector Target { get; private set; }
+        public GameMode(Mode mode, TargetSelector target = null) {
             Mode = mode;
+            Target = target;
         }
 
         public override string ToString() {
-            return CommandHelper.Build("gamemode", Mode.GetDescription());
+            return CommandHelper.Build("gamemode", Mode.GetDescription(), Target);
         }
     }
 
